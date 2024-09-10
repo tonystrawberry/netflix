@@ -1,25 +1,6 @@
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-# netflix
+<p align="center">
+  <img src="[https://raw.githubusercontent.com/tonystrawberry/tonystrawberry.codes/main/src/images/logo.png](https://static-00.iconduck.com/assets.00/netflix-icon-icon-1024x1024-w4ni4f6d.png)" width="60" />
+</p>
+<h1 align="center">
+  Netflix Clone
+</h1>
