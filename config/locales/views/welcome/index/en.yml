@@ -1,0 +1,11 @@
+en:
+  views:
+    welcome:
+      index:
+        hero:
+          title: "Unlimited movies, TV shows, and more"
+          subtitle: "Starts at JPY 790. Cancel anytime."
+          description: "Ready to watch? Enter your email to create or restart your membership."
+          get_started: "Get Started"
+          email_address: "Enter your email address"
+          sign_in: "Sign In"

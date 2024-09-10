@@ -1,0 +1,11 @@
+ja:
+  views:
+    welcome:
+      index:
+        hero:
+          title: "映画もドラマも見放題"
+          subtitle: "料金は￥790から。いつでもキャンセルOK。"
+          description: "まもなくご視聴いただけます! メールアドレスを入力してメンバーシップを開始、または再開してください。"
+          get_started: "今すぐ始める"
+          email_address: "メールアドレスを入力"
+          sign_in: "ログイン"
