@@ -1,0 +1,9 @@
+en:
+  views:
+    devise:
+      sessions:
+        new:
+          title: "Let's watch something."
+          email_address: "Email"
+          password: "Put in your password"
+          sign_in: "Sign In"

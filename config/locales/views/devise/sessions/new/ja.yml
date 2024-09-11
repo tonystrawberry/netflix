@@ -1,0 +1,9 @@
+ja:
+  views:
+    devise:
+      sessions:
+        new:
+          title: "映画を見ましょう。"
+          email_address: "メールアドレス"
+          password: "パスワードを入力してください"
+          sign_in: "サインイン"

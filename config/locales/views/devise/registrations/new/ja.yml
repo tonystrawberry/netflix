@@ -1,0 +1,9 @@
+ja:
+  views:
+    devise:
+      registrations:
+        new:
+          title: "アカウントを作成してメンバーシップを始めてください。"
+          email_address: "メールアドレス"
+          password: "パスワードを追加してください"
+          create_account: "アカウントを作成する"

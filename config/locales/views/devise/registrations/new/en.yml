@@ -1,0 +1,9 @@
+en:
+  views:
+    devise:
+      registrations:
+        new:
+          title: "Create an account to start your membership"
+          email_address: "Email"
+          password: "Add a password"
+          create_account: "Create Account"

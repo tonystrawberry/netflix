@@ -1,0 +1,8 @@
+ja:
+  activerecord:
+    models:
+      user: User
+    attributes:
+      user:
+        email: Email address
+        password: Password
