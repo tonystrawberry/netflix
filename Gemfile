@@ -58,10 +58,10 @@ end
 
 gem "tailwindcss-rails", "~> 2.7"
 
-gem "hotwire-livereload", "~> 1.4", :group => :development
+gem "hotwire-livereload", "~> 1.4", group: :development
 
 gem "view_component", "~> 3.14"
 
 gem "devise", "~> 4.9"
 
-gem 'rails-i18n', '~> 7.0.0' # For 7.0.0
+gem "rails-i18n", "~> 7.0.0" # For 7.0.0

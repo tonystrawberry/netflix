@@ -7,7 +7,7 @@ module LocaleHelper
   # @return [Array<Array<String, Symbol>>]
   def available_locales
     I18n.available_locales.map do |locale|
-      [I18n.t("locales.#{locale}"), locale]
+      [ I18n.t("locales.#{locale}"), locale ]
     end
   end
 end
