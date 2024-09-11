@@ -21,6 +21,10 @@
 
   <body>
     <main>
+      <% flash.each do |type, message| %>
+        <%= render(FlashAlertComponent.new(type:, message:)) %>
+      <% end %>
+
       <%= yield %>
     </main>
   </body>

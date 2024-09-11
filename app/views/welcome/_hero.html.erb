@@ -11,7 +11,7 @@
       <div class="lg:flex lg:flex-1 lg:justify-end lg:align-center justify-center gap-4">
         <%= render(LocaleSelectorComponent.new(available_locales:, current_locale:)) %>
 
-        <button type="submit" class="flex-none rounded-md bg-red-600 text-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"><%= I18n.t("views.welcome.index.hero.sign_in") %></button>
+        <button type="submit" class="flex-none rounded-md bg-red-600 text-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-red-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"><%= I18n.t("views.welcome.index.hero.sign_in") %></button>
       </div>
     </nav>
   </header>
@@ -30,7 +30,7 @@
         <form class="mx-auto mt-10 flex max-w-md gap-x-4">
           <label for="email-address" class="sr-only"><%= I18n.t("views.welcome.index.hero.email_address") %></label>
           <input id="email-address" name="email" type="email" autocomplete="email" required class="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6" placeholder="<%= I18n.t("views.welcome.index.hero.email_address") %>">
-          <button type="submit" class="flex-none rounded-md bg-red-600 text-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"><%= I18n.t("views.welcome.index.hero.get_started") %></button>
+          <button type="submit" class="flex-none rounded-md bg-red-600 text-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-red-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"><%= I18n.t("views.welcome.index.hero.get_started") %></button>
         </form>
       </div>
     </div>

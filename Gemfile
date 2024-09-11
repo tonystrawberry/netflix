@@ -61,3 +61,5 @@ gem "tailwindcss-rails", "~> 2.7"
 gem "hotwire-livereload", "~> 1.4", :group => :development
 
 gem "view_component", "~> 3.14"
+
+gem "devise", "~> 4.9"
