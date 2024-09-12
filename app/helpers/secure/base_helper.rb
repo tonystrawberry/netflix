@@ -1,0 +1,2 @@
+module Secure::BaseHelper
+end

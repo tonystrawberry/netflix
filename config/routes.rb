@@ -22,6 +22,8 @@ Rails.application.routes.draw do
       registrations: "users/registrations"
     }
 
+  get "/browse" => "secure/movies#index"
+
   scope "/:locale" do
     get "/" => "welcome#index", as: :welcome
   end
