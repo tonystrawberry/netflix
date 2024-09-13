@@ -19,7 +19,8 @@ Rails.application.routes.draw do
     path: "",
     path_names: { sign_in: "login", sign_out: "logout", sign_up: "signup" },
     controllers: {
-      registrations: "users/registrations"
+      registrations: "users/registrations",
+      sessions: "users/sessions"
     }
 
   get "/browse" => "secure/movies#index"
