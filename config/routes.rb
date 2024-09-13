@@ -23,7 +23,17 @@ Rails.application.routes.draw do
       sessions: "users/sessions"
     }
 
-  get "/browse" => "secure/movies#index"
+  scope module: :secure do
+    controller :movies do
+      get "/movies" => :index
+    end
+
+    controller :profiles do
+      get "profiles" => :index
+      get "profiles/new" => :new
+      post "profiles" => :create
+    end
+  end
 
   scope "/:locale" do
     get "/" => "welcome#index", as: :welcome

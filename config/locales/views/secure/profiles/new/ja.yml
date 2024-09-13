@@ -1,0 +1,7 @@
+ja:
+  views:
+    secure:
+      profiles:
+        new:
+          title: "プロフィール登録"
+          add_profile: "登録"

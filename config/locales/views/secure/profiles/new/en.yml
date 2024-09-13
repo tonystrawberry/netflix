@@ -1,0 +1,7 @@
+en:
+  views:
+    secure:
+      profiles:
+        new:
+          title: "Add Profile"
+          add_profile: "Add Profile"

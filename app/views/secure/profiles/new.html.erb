@@ -1,0 +1,23 @@
+<div class="bg-white py-16 sm:py-24 lg:py-32">
+  <div class="flex flex-col space-y-4 items-center mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+      <h2 class="inline sm:block"><%= t('views.secure.profiles.new.title') %></h2>
+    </div>
+    <%= form_with model: @profile, url: profiles_path, data: { turbo_frame: "_top" } do |form| %>
+      <div class="flex gap-x-4">
+
+        <%= form.label :name, t('views.secure.profiles.new.name'), class: 'sr-only' %>
+
+        <%= form.text_field :name,
+          id: 'name',
+          required: true,
+          autocomplete: 'name',
+          class: 'min-w-0 flex-auto rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6',
+          placeholder: 'Enter your name' %>
+
+        <%= form.submit t('views.secure.profiles.new.add_profile'),
+          class: 'flex-none rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600' %>
+      </div>
+    <% end %>
+  </div>
+</div>

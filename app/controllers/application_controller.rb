@@ -15,6 +15,6 @@ class ApplicationController < ActionController::Base
 
   # Redirect to the browse page if the user is already signed in.
   def redirect_to_home
-    redirect_to browse_path
+    redirect_to movies_path
   end
 end
