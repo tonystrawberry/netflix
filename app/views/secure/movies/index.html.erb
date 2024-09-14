@@ -56,7 +56,11 @@
               <button type="button" class="relative flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                 <span class="absolute -inset-1.5"></span>
                 <span class="sr-only">Open user menu</span>
-                <%= image_tag @current_profile.avatar, class: "h-8 w-8 rounded-full" %>
+                <% if @current_profile.avatar.attached? %>
+                  <%= image_tag @current_profile.avatar || "", class: "h-8 w-8 rounded-full" %>
+                <% else %>
+                  <%= image_tag "avatar_placeholder.png", class: "h-8 w-8 rounded-full" %>
+                <% end %>
               </button>
             </div>
 
