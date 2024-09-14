@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       get "profiles" => :index
       get "profiles/new" => :new
       post "profiles" => :create
+      post "profiles/:code/select" => :select, as: :profiles_select
     end
   end
 

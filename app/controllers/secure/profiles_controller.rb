@@ -19,9 +19,16 @@ class Secure::ProfilesController < Secure::BaseController
     end
   end
 
+  def select
+    profile = current_user.profiles.find_by!(code: params[:code])
+    cookies.signed[:profile_code] = profile.code
+
+    redirect_to movies_path
+  end
+
   private
 
   def profile_params
-    params.require(:profile).permit(:name)
+    params.require(:profile).permit(:name, :avatar)
   end
 end

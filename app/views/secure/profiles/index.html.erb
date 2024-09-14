@@ -7,14 +7,20 @@
 
       <div class="mt-11 grid grid-cols-1 items-start gap-x-6 gap-y-16 sm:mt-16 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-8">
         <% @profiles.each do |profile| %>
-          <div class="flex flex-col-reverse">
-            <div class="mt-6">
-              <h3 class="text-2xl font-medium text-gray-900 text-center"><%= profile.name %></h3>
+          <%= link_to profiles_select_path(code: profile.code), method: :post, data: { turbo_method: "post", turbo_frame: "_top" } do %>
+            <div class="cursor-pointer flex flex-col-reverse">
+              <div class="mt-6">
+                <h3 class="text-2xl font-medium text-gray-900 text-center"><%= profile.name %></h3>
+              </div>
+              <div class="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-100">
+                <% if profile.avatar.attached? %>
+                  <%= image_tag profile.avatar, data: { avatar_preview_target: "preview" }, class: "object-cover object-center h-24 w-24" %>
+                <% else %>
+                  <%= image_tag "", data: { avatar_preview_target: "preview" }, class: "object-cover object-center h-24 w-24" %>
+                <% end %>
+              </div>
             </div>
-            <div class="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-100">
-              <img src="https://tailwindui.com/img/ecommerce-images/product-feature-08-detail-03.jpg" alt="<%= profile.name %>" class="object-cover object-center">
-            </div>
-          </div>
+          <% end %>
         <% end %>
         <%= link_to profiles_new_path, class:"cursor-pointer flex flex-col-reverse", data: { turbo_frame: "_top" } do %>
           <div class="mt-6">

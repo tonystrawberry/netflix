@@ -6,6 +6,7 @@ class Secure::BaseController < ApplicationController
 
   # Set the profile for the current user.
   def set_current_profile!
+    @profile_code = cookies.signed[:profile_code]
     @current_profile = current_user.profiles.find_by(code: @profile_code)
 
     redirect_to profiles_path if @current_profile.nil?
