@@ -27,6 +27,10 @@ class Secure::ProfilesController < Secure::BaseController
     end
   end
 
+  def show
+    @profile = current_user.profiles.find_by!(code: params[:code])
+  end
+
   def select
     profile = current_user.profiles.find_by!(code: params[:code])
     cookies.signed[:profile_code] = profile.code

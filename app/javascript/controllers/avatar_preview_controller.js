@@ -7,6 +7,14 @@ export default class extends Controller {
   connect() {
   }
 
+  // Trigger the file input click
+  // when the user clicks on the preview image
+  triggerFileUpload() {
+    this.inputTarget.click();
+  }
+
+  // Preview the image when the user selects a file
+  // from the file input
   preview() {
     const input = this.inputTarget;
     const preview = this.previewTarget;
