@@ -24,7 +24,7 @@
 -->
 <div class="min-h-full">
   <nav class="border-b border-gray-200 bg-white">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex h-16 justify-between">
         <div class="flex">
           <div class="flex flex-shrink-0 items-center">
@@ -136,59 +136,32 @@
   </nav>
 
   <div class="py-10 space-y-8">
-    <section>
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold leading-tight tracking-tight text-gray-900"><%= t('views.secure.movies.index.my_list') %></h1>
-      </div>
+    <% @genres.each do |genre| %>
+      <section>
+        <div class="mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 class="text-3xl font-bold leading-tight tracking-tight text-gray-900"><%= genre.name %></h1>
+        </div>
 
-      <div class="mt-4 px-4 overflow-hidden">
-        <div class="whitespace-nowrap">
-          <div class="inline-block w-60 h-32 overflow-hidden rounded">
+        <div class="mt-4 px-4 sm:px-6 lg:px-8 overflow-hidden">
+          <div class="whitespace-nowrap">
+            <div class="inline-block w-60 h-32 overflow-hidden rounded">
+              <img class="w-full h-full object-cover object-center" src="https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80" alt="(Movie Title)">
+            </div>
+
+            <div class="inline-block w-60 h-32 overflow-hidden rounded">
+              <img class="w-full h-full object-cover object-center" src="https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80" alt="(Movie Title)">
+            </div>
+
+            <div class="inline-block w-60 h-32 overflow-hidden rounded">
             <img class="w-full h-full object-cover object-center" src="https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80" alt="(Movie Title)">
-          </div>
+            </div>
 
-          <div class="inline-block w-60 h-32 overflow-hidden rounded">
+            <div class="inline-block w-60 h-32 overflow-hidden rounded">
             <img class="w-full h-full object-cover object-center" src="https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80" alt="(Movie Title)">
-          </div>
-
-          <div class="inline-block w-60 h-32 overflow-hidden rounded">
-          <img class="w-full h-full object-cover object-center" src="https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80" alt="(Movie Title)">
-          </div>
-
-          <div class="inline-block w-60 h-32 overflow-hidden rounded">
-          <img class="w-full h-full object-cover object-center" src="https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80" alt="(Movie Title)">
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold leading-tight tracking-tight text-gray-900"><%= t('views.secure.movies.index.only_on_netflix') %></h1>
-      </div>
-
-      <div class="mt-4 px-4 overflow-hidden">
-        <div class="whitespace-nowrap">
-          <div class="inline-block w-60 h-32 overflow-hidden rounded">
-            <img class="w-full h-full object-cover object-center" src="https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80" alt="(Movie Title)">
-          </div>
-
-          <div class="inline-block w-60 h-32 overflow-hidden rounded">
-            <img class="w-full h-full object-cover object-center" src="https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80" alt="(Movie Title)">
-          </div>
-
-          <div class="inline-block w-60 h-32 overflow-hidden rounded">
-          <img class="w-full h-full object-cover object-center" src="https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80" alt="(Movie Title)">
-          </div>
-
-          <div class="inline-block w-60 h-32 overflow-hidden rounded">
-          <img class="w-full h-full object-cover object-center" src="https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80" alt="(Movie Title)">
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-
+      </section>
+    <% end %>
   </div>
 </div>

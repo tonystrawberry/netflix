@@ -5,6 +5,9 @@ class Profile < ApplicationRecord
 
   validates :name, presence: true
   validates :code, presence: true, uniqueness: true
+  validates :language, presence: true
+
+  enum :language, I18n.available_locales
 
   before_validation :generate_code, on: :create
 

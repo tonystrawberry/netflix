@@ -13,6 +13,7 @@ class Secure::ProfilesController < Secure::BaseController
 
   def create
     @profile = current_user.profiles.new(profile_params)
+    @profile.language = I18n.locale
 
     if @profile.save
       unless @profile.avatar.attached?
