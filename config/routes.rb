@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :administrators
   # Redirect the root path to the `/en` locale
   root to: redirect("/en")
 
@@ -21,6 +22,13 @@ Rails.application.routes.draw do
     controllers: {
       registrations: "users/registrations",
       sessions: "users/sessions"
+    }
+
+  devise_for :administrators,
+    path: "admin",
+    path_names: { sign_in: "login", sign_out: "logout" },
+    controllers: {
+      sessions: "administrators/sessions"
     }
 
   scope module: :secure do
