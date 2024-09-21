@@ -1,0 +1,30 @@
+# == Schema Information
+#
+# Table name: movies
+#
+#  id                :bigint           not null, primary key
+#  audience_type     :integer          default("all"), not null
+#  description       :text             not null
+#  featured          :boolean          default(FALSE), not null
+#  media_type        :integer          default("movie"), not null
+#  published_at      :datetime
+#  publishing_status :integer          default("draft"), not null
+#  released_on       :date             not null
+#  title             :string           not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#
+
+one:
+  title: MyString
+  description: MyText
+  released_on: 2024-09-21
+  audience_type: 1
+  media_type: 1
+
+two:
+  title: MyString
+  description: MyText
+  released_on: 2024-09-21
+  audience_type: 1
+  media_type: 1

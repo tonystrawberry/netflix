@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_19_135717) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_21_134454) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -85,6 +85,19 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_19_135717) do
     t.datetime "updated_at", null: false
     t.index ["translatable_id", "translatable_type", "key"], name: "index_mobility_text_translations_on_translatable_attribute"
     t.index ["translatable_id", "translatable_type", "locale", "key"], name: "index_mobility_text_translations_on_keys", unique: true
+  end
+
+  create_table "movies", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "description", null: false
+    t.date "released_on", null: false
+    t.integer "publishing_status", default: 0, null: false
+    t.integer "audience_type", default: 0, null: false
+    t.integer "media_type", default: 0, null: false
+    t.boolean "featured", default: false, null: false
+    t.datetime "published_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "profiles", force: :cascade do |t|

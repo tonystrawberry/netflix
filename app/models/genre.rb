@@ -8,6 +8,10 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+# Indexes
+#
+#  index_genres_on_code  (code) UNIQUE
+#
 class Genre < ApplicationRecord
   extend Mobility
   translates :name, type: :string
