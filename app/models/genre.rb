@@ -13,6 +13,8 @@
 #  index_genres_on_code  (code) UNIQUE
 #
 class Genre < ApplicationRecord
+  has_prefix_id :genre
+
   extend Mobility
   translates :name, type: :string
 

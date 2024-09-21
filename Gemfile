@@ -73,3 +73,5 @@ gem "rails-i18n", "~> 7.0.0" # For 7.0.0
 gem "honeybadger", "~> 5.15"
 
 gem 'mobility', '~> 1.3.0.rc3'
+
+gem 'prefixed_ids', '~> 1.8', '>= 1.8.1'
