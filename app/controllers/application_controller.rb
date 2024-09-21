@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
 
   around_action :switch_locale
   before_action :redirect_to_home, if: -> { user_signed_in? && !controller_path.start_with?('secure/') }
+  before_action :redirect_to_editor_home, if: -> { administrator_signed_in? && !controller_path.start_with?('editor/') }
 
   private
 
@@ -16,5 +17,10 @@ class ApplicationController < ActionController::Base
   # Redirect to the browse page if the user is already signed in.
   def redirect_to_home
     redirect_to movies_path
+  end
+
+  # Redirect to the editor page if the administrator is already signed in.
+  def redirect_to_editor_home
+    redirect_to editor_movies_path
   end
 end

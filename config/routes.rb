@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  devise_for :administrators
   # Redirect the root path to the `/en` locale
   root to: redirect("/en")
 
@@ -25,7 +24,7 @@ Rails.application.routes.draw do
     }
 
   devise_for :administrators,
-    path: "admin",
+    path: "administrators",
     path_names: { sign_in: "login", sign_out: "logout" },
     controllers: {
       sessions: "administrators/sessions"
@@ -42,6 +41,12 @@ Rails.application.routes.draw do
       get "profiles/:code" => :show, as: :profile
       post "profiles" => :create
       post "profiles/:code/select" => :select, as: :profiles_select
+    end
+  end
+
+  namespace :editor do
+    controller :movies do
+      get "/movies" => :index
     end
   end
 
