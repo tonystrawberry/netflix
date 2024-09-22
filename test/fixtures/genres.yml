@@ -14,7 +14,9 @@
 #
 
 one:
-  code: MyString
+  key: "anime"
+  code: <%= SecureRandom.hex(8) %>
 
 two:
-  code: MyString
+  key: "comedy"
+  code: <%= SecureRandom.hex(8) %>

@@ -1,0 +1,35 @@
+one_en:
+  locale: "en"
+  key: "name"
+  value: "Anime"
+  translatable_type: "Genre"
+  translatable_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+one_ja:
+  locale: "ja"
+  key: "name"
+  value: "アニメ"
+  translatable_type: "Genre"
+  translatable_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+two_en:
+  locale: "en"
+  key: "name"
+  value: "Comedy"
+  translatable_type: "Genre"
+  translatable_id: <%= ActiveRecord::FixtureSet.identify(:two) %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+two_ja:
+  locale: "ja"
+  key: "name"
+  value: "コメディ"
+  translatable_type: "Genre"
+  translatable_id: <%= ActiveRecord::FixtureSet.identify(:two) %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

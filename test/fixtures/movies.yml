@@ -16,15 +16,21 @@
 #
 
 one:
-  title: MyString
-  description: MyText
-  released_on: 2024-09-21
-  audience_type: 1
-  media_type: 1
+  audience_type: <%= Movie.audience_types.keys.sample %>
+  description: <%= Faker::Lorem.paragraph %>
+  featured: <%= [true, false].sample %>
+  media_type: <%= Movie.media_types.keys.sample %>
+  published_at: <%= Faker::Date.between(from: 1.year.ago, to: Date.today) %>
+  publishing_status: <%= Movie.publishing_statuses[:published] %>
+  released_on: <%= Faker::Date.between(from: 10.years.ago, to: 1.year.ago) %>
+  title: <%= Faker::Movie.title %>
 
 two:
-  title: MyString
-  description: MyText
-  released_on: 2024-09-21
-  audience_type: 1
-  media_type: 1
+  audience_type: <%= Movie.audience_types.keys.sample %>
+  description: <%= Faker::Lorem.paragraph %>
+  featured: <%= [true, false].sample %>
+  media_type: <%= Movie.media_types.keys.sample %>
+  published_at:
+  publishing_status: <%= Movie.publishing_statuses[:draft] %>
+  released_on: <%= Faker::Date.between(from: 10.years.ago, to: 1.year.ago) %>
+  title: <%= Faker::Movie.title %>

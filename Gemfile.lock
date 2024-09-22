@@ -111,6 +111,8 @@ GEM
     dotenv (3.1.2)
     drb (2.2.1)
     erubi (1.13.0)
+    faker (3.4.2)
+      i18n (>= 1.8.11, < 2)
     ffi (1.17.0-aarch64-linux-gnu)
     ffi (1.17.0-arm-linux-gnu)
     ffi (1.17.0-arm64-darwin)
@@ -363,6 +365,7 @@ DEPENDENCIES
   debug
   devise (~> 4.9)
   dotenv
+  faker (~> 3.4)
   honeybadger (~> 5.15)
   hotwire-livereload (~> 1.4)
   importmap-rails

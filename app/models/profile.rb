@@ -38,8 +38,6 @@ class Profile < ApplicationRecord
   # Generate a unique code for the profile.
   # @return [void]
   def generate_code
-    binding.irb
-
     self.code = SecureRandom.hex(8)
   end
 end

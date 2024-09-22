@@ -9,7 +9,7 @@
         </a>
       </div>
       <div class="flex justify-end align-center justify-center gap-4">
-        <%= render(LocaleSelectorComponent.new(available_locales:, current_locale:)) %>
+        <%= render(Welcome::LocaleSelectorComponent.new(available_locales:, current_locale:)) %>
 
         <%= link_to I18n.t("views.welcome.index.hero.sign_in"), new_user_session_path(locale: current_locale), class: "flex-none rounded-md bg-red-600 text-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-red-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" %>
       </div>

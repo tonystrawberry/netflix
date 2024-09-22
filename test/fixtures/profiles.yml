@@ -23,8 +23,14 @@
 
 one:
   user: one
-  name: MyString
+  name: <%= Faker::Name.name %>
+  language: <%= Profile.languages.keys.sample %>
+  avatar: <%= ActiveStorage::FixtureSet.blob filename: "avatar_one.jpeg" %>
+  code: <%= SecureRandom.hex(8) %>
 
 two:
-  user: two
-  name: MyString
+  user: one
+  name: <%= Faker::Name.name %>
+  language: <%= Profile.languages.keys.sample %>
+  avatar: <%= ActiveStorage::FixtureSet.blob filename: "avatar_two.jpeg" %>
+  code: <%= SecureRandom.hex(8) %>
