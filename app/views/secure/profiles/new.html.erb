@@ -13,7 +13,7 @@
               <% if @profile.avatar.attached? %>
                 <%= image_tag @profile.avatar, data: { avatar_preview_target: "preview" }, class: "object-cover object-center h-48 w-48" %>
               <% else %>
-                <%= image_tag "avatar_placeholder.png", data: { avatar_preview_target: "preview" }, class: "object-cover object-center h-48 w-48" %>
+                <%= image_tag "user_avatar_placeholder.png", data: { avatar_preview_target: "preview" }, class: "object-cover object-center h-48 w-48" %>
               <% end %>
               <div class="absolute inset-0 bg-black opacity-0 hover:opacity-50 transition-opacity" data-action="click->avatar-preview#triggerFileUpload"></div>
             </div>

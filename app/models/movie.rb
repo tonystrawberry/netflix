@@ -17,6 +17,9 @@
 class Movie < ApplicationRecord
   has_prefix_id :movie
 
+  has_one_attached :cover
+  has_one_attached :logo
+
   enum publishing_status: { draft: 0, published: 1 }, _prefix: true
   enum audience_type: { all: 0, kids_7: 1, kids_12: 2, teens_13: 3, adults_16: 4, adults_18: 5 }, _prefix: true
   enum media_type: { movie: 0, series: 1 }, _prefix: true

@@ -2,6 +2,6 @@
 
 class Editor::MovieRowComponent < ViewComponent::Base
   def initialize(movie:)
-    @movie = movie
+    @movie = movie.decorate
   end
 end

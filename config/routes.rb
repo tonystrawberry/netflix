@@ -47,6 +47,10 @@ Rails.application.routes.draw do
   namespace :editor do
     controller :movies do
       get "/movies" => :index
+      get "/movies/new" => :new, as: :new_movie
+      post "/movies" => :create, as: :create_movie
+      get "/movies/:id/edit" => :edit, as: :edit_movie
+      patch "/movies/:id" => :update, as: :update_movie
     end
   end
 
