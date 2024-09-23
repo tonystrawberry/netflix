@@ -21,6 +21,8 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Profile < ApplicationRecord
+  has_prefix_id :profile
+
   belongs_to :user
 
   has_one_attached :avatar

@@ -13,14 +13,15 @@ fixtures_dir = Rails.root.join('test', 'fixtures')
 # For example, a profile fixture may depend on a user fixture.
 # Therefore, we need to load the user fixtures first.
 
-[
-  'administrators',
-  'users',
-  'profiles',
-  'genres',
-  'mobility_string_translations',
-  'movies'
-].each do |fixture|
-  "Loading #{fixture} fixtures..."
-  ActiveRecord::FixtureSet.create_fixtures(fixtures_dir, fixture)
+ActiveRecord::Base.transaction do
+  [
+    'administrators',
+    'users',
+    'profiles',
+    'genres',
+    'mobility_string_translations',
+    'movies'
+  ].each do |fixture|
+    ActiveRecord::FixtureSet.create_fixtures(fixtures_dir, fixture)
+  end
 end
