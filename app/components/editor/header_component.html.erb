@@ -7,9 +7,8 @@
           <%= image_tag "logo.svg.webp", class: "hidden h-8 w-auto lg:block" %>
         </div>
         <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
-          <!-- Current: "border-red-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
-          <a href="#" class="inline-flex items-center border-b-2 border-red-500 px-1 pt-1 text-sm font-medium text-gray-900" aria-current="page">Movies</a>
-          <a href="#" class="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">Genres</a>
+          <%= link_to "Movies", editor_movies_path, class: "#{ controller_name == 'movies' ? 'border-red-500 text-gray-900' : 'border-transparent text-gray-500' } inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium hover:border-gray-300 hover:text-gray-700" %>
+          <%= link_to "Genres", editor_genres_path, class: "#{ controller_name == 'genres' ? 'border-red-500 text-gray-900' : 'border-transparent text-gray-500' } inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium hover:border-gray-300 hover:text-gray-700" %>
         </div>
       </div>
       <div class="hidden sm:ml-6 sm:flex sm:items-center">

@@ -52,6 +52,14 @@ Rails.application.routes.draw do
       get "/movies/:id/edit" => :edit, as: :edit_movie
       patch "/movies/:id" => :update, as: :update_movie
     end
+
+    controller :genres do
+      get "/genres" => :index
+      get "/genres/new" => :new, as: :new_genre
+      post "/genres" => :create, as: :create_genre
+      get "/genres/:id/edit" => :edit, as: :edit_genre
+      patch "/genres/:id" => :update, as: :update_genre
+    end
   end
 
   scope "/:locale" do

@@ -8,6 +8,7 @@ class Editor::MoviesController < Editor::BaseController
     @movie = Movie.new
     @genres = Genre.all
     @audiences = Movie.audience_types.keys
+    @publishing_statuses = Movie.publishing_statuses.keys
   end
 
   def create
@@ -18,6 +19,7 @@ class Editor::MoviesController < Editor::BaseController
     else
       @genres = Genre.all
       @audiences = Movie.audience_types.keys
+      @publishing_statuses = Movie.publishing_statuses.keys
 
       render :new, status: :unprocessable_entity
     end
@@ -27,6 +29,7 @@ class Editor::MoviesController < Editor::BaseController
     @movie = Movie.find(params[:id])
     @genres = Genre.all
     @audiences = Movie.audience_types.keys
+    @publishing_statuses = Movie.publishing_statuses.keys
   end
 
   def update
@@ -37,6 +40,7 @@ class Editor::MoviesController < Editor::BaseController
     else
       @genres = Genre.all
       @audiences = Movie.audience_types.keys
+      @publishing_statuses = Movie.publishing_statuses.keys
 
       render :edit, status: :unprocessable_entity
     end
@@ -45,6 +49,6 @@ class Editor::MoviesController < Editor::BaseController
   private
 
   def movie_params
-    params.require(:movie).permit(:title, :description, :released_on, :audience_type, :featured, :cover, :logo)
+    params.require(:movie).permit(:title, :description, :released_on, :audience_type, :featured, :cover, :logo, :publishing_status)
   end
 end

@@ -9,3 +9,7 @@ en:
           teens_13: "13歳以上"
           adults_16: "16歳以上"
           adults_18: "18歳以上"
+        publishing_statuses:
+          draft: "下書き"
+          published: "公開中"
+          archived: "公開終了"

@@ -25,28 +25,28 @@
         <!-- Logo field (file upload) -->
         <div class="col-span-full" data-controller="avatar-preview">
           <%= f.label :logo, "Logo", class: "block text-sm font-medium leading-6 text-gray-900" %>
-          <div class="mt-2 flex items-center gap-x-3">
+          <div class="mt-2 flex flex-col space-y-4 max-w-xs">
             <% if @movie.logo.attached? %>
-              <%= image_tag @movie.logo, data: { avatar_preview_target: "preview" }, class: "object-cover object-center h-12 w-12 rounded-md" %>
+              <%= image_tag @movie.logo, data: { avatar_preview_target: "preview" }, class: "object-cover object-center aspect-square rounded-md" %>
             <% else %>
-              <%= image_tag "movie_logo_placeholder.png", data: { avatar_preview_target: "preview" }, class: "object-cover object-center h-12 w-12 rounded-md" %>
+              <%= image_tag "movie_logo_placeholder.png", data: { avatar_preview_target: "preview" }, class: "object-cover object-center aspect-square rounded-md" %>
             <% end %>
             <%= f.file_field :logo, class: "sr-only", id: "logo-upload", data: { avatar_preview_target: "input", action: "change->avatar-preview#preview" } %>
-            <label for="logo-upload" class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 cursor-pointer">Change</label>
+            <label for="logo-upload" class="text-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">Change</label>
           </div>
         </div>
 
         <!-- Cover field (file upload) -->
         <div class="col-span-full" data-controller="avatar-preview">
           <%= f.label :cover, "Cover", class: "block text-sm font-medium leading-6 text-gray-900" %>
-          <div class="mt-2 flex items-center gap-x-3">
+          <div class="flex flex-col mt-2 space-y-4">
             <% if @movie.cover.attached? %>
-              <%= image_tag @movie.cover, data: { avatar_preview_target: "preview" }, class: "object-cover object-center h-48 h-96 rounded-md" %>
+              <%= image_tag @movie.cover, data: { avatar_preview_target: "preview" }, class: "object-cover object-center aspect-video rounded-md" %>
             <% else %>
-              <%= image_tag "movie_cover_placeholder.png", data: { avatar_preview_target: "preview" }, class: "object-cover object-center h-48 w-96 rounded-md" %>
+              <%= image_tag "movie_cover_placeholder.png", data: { avatar_preview_target: "preview" }, class: "object-cover object-center aspect-video rounded-md" %>
             <% end %>
             <%= f.file_field :cover, class: "sr-only", id: "cover-upload", data: { avatar_preview_target: "input", action: "change->avatar-preview#preview" } %>
-            <label for="cover-upload" class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 cursor-pointer">Change</label>
+            <label for="cover-upload" class="text-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">Change</label>
           </div>
         </div>
 
@@ -55,7 +55,7 @@
           <%= f.label :audience_type, "Audience", class: "text-sm font-medium leading-6 text-gray-900" %>
           <div class="mt-2 grid grid-cols-3 gap-3 sm:grid-cols-6">
             <% @audiences.each do |audience| %>
-              <div class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+              <div class="flex items-center ps-2 sm:ps-4 border border-gray-200 rounded dark:border-gray-700">
                 <%= f.radio_button :audience_type, audience, class: "w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" %>
                 <%= f.label :audience_type, t("activerecord.attributes.movie.audiences.#{audience}"), value: audience, class: "w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300" %>
               </div>
@@ -86,6 +86,18 @@
           </div>
         </div>
 
+        <!-- Publishing Status -->
+        <div class="col-span-full">
+          <%= f.label :publishing_status, "Publishing Status", class: "text-sm font-medium leading-6 text-gray-900" %>
+          <div class="mt-2 grid grid-cols-3 gap-3 sm:grid-cols-6">
+            <% @publishing_statuses.each do |publishing_status| %>
+              <div class="flex items-center ps-2 sm:ps-4 border border-gray-200 rounded dark:border-gray-700">
+                <%= f.radio_button :publishing_status, publishing_status, class: "w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" %>
+                <%= f.label :publishing_status, t("activerecord.attributes.movie.publishing_statuses.#{publishing_status}"), value: publishing_status, class: "w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
       </div>
     </div>
   </div>
