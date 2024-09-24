@@ -1,0 +1,4 @@
+
+<%= turbo_stream.append "genres" do %>
+  <%= render "genre", movie: @movie, movies_genre: @movies_genre %>
+<% end %>

@@ -51,6 +51,9 @@ Rails.application.routes.draw do
       post "/movies" => :create, as: :create_movie
       get "/movies/:id/edit" => :edit, as: :edit_movie
       patch "/movies/:id" => :update, as: :update_movie
+
+      get "/movies/genres/new" => :new_genre, as: :new_movies_genre
+      delete "/movies/genres/:id" => :destroy_genre, as: :destroy_movies_genre
     end
 
     controller :genres do

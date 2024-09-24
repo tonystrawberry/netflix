@@ -24,6 +24,11 @@ class Movie < ApplicationRecord
   enum audience_type: { all: 0, kids_7: 1, kids_12: 2, teens_13: 3, adults_16: 4, adults_18: 5 }, _prefix: true
   enum media_type: { movie: 0, series: 1 }, _prefix: true
 
+  has_many :movies_genres, dependent: :destroy
+  has_many :genres, through: :movies_genres
+
+  accepts_nested_attributes_for :movies_genres
+
   validates :title, presence: true
   validates :description, presence: true
   validates :released_on, presence: true

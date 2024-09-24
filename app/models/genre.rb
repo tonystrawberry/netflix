@@ -18,6 +18,9 @@ class Genre < ApplicationRecord
   extend Mobility
   translates :name, type: :string
 
+  has_many :movies_genres, dependent: :destroy
+  has_many :movies, through: :movies_genres
+
   validates :code, presence: true, uniqueness: true
 
   before_validation :generate_code, on: :create
