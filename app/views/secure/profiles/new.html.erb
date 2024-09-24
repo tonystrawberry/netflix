@@ -18,9 +18,8 @@
               <div class="absolute inset-0 bg-black opacity-0 hover:opacity-50 transition-opacity" data-action="click->avatar-preview#triggerFileUpload"></div>
             </div>
 
-
             <%= form.label :avatar, class: "hidden" %>
-            <%= form.file_field :avatar, data: { avatar_preview_target: "input", action: "change->avatar-preview#preview"}, class: "hidden" %>
+            <%= form.file_field :avatar, data: { avatar_preview_target: "input", action: "change->avatar-preview#preview" }, class: "hidden" %>
 
           </div>
         </div>

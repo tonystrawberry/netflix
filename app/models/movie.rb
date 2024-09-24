@@ -30,7 +30,7 @@ class Movie < ApplicationRecord
   validates :publishing_status, presence: true
   validates :audience_type, presence: true
   validates :media_type, presence: true
-  validates :featured, presence: true
+  validates :featured, inclusion: { in: [true, false] }
 
   scope :published, -> { where(publishing_status: :published) }
 

@@ -1,0 +1,11 @@
+ja:
+  activerecord:
+    attributes:
+      movie:
+        audiences:
+          all: "全員"
+          kids_7: "7歳以上"
+          kids_12: "12歳以上"
+          teens_13: "13歳以上"
+          adults_16: "16歳以上"
+          adults_18: "18歳以上"

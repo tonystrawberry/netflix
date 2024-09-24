@@ -7,6 +7,7 @@ class Editor::MoviesController < Editor::BaseController
   def new
     @movie = Movie.new
     @genres = Genre.all
+    @audiences = Movie.audience_types.keys
   end
 
   def create
@@ -16,13 +17,16 @@ class Editor::MoviesController < Editor::BaseController
       redirect_to editor_movies_path
     else
       @genres = Genre.all
-      render :new
+      @audiences = Movie.audience_types.keys
+
+      render :new, status: :unprocessable_entity
     end
   end
 
   def edit
     @movie = Movie.find(params[:id])
     @genres = Genre.all
+    @audiences = Movie.audience_types.keys
   end
 
   def update
@@ -32,7 +36,15 @@ class Editor::MoviesController < Editor::BaseController
       redirect_to editor_movies_path
     else
       @genres = Genre.all
-      render :edit
+      @audiences = Movie.audience_types.keys
+
+      render :edit, status: :unprocessable_entity
     end
+  end
+
+  private
+
+  def movie_params
+    params.require(:movie).permit(:title, :description, :released_on, :audience_type, :featured, :cover, :logo)
   end
 end
