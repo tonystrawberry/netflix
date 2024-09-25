@@ -1,4 +1,4 @@
 
 <%= turbo_stream.append "genres" do %>
-  <%= render "genre", movie: @movie, movies_genre: @movies_genre %>
+  <%= render "genre", movie: @movie, movies_genre: @movies_genre, index: params[:index] %>
 <% end %>

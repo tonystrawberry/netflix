@@ -66,7 +66,21 @@ class Editor::MoviesController < Editor::BaseController
   end
 
   def destroy_genre
-    @id = params[:id]
+    @index = params[:index].to_i
+    @movie = Movie.new(movies_genres: [MoviesGenre.new])
+  end
+
+  def create_genre
+    movie_id = params[:movie_id]
+
+    @movie = if movie_id.present?
+              Movie.find(movie_id)
+            else
+              Movie.new
+            end
+
+    @movies_genre = @movie.movies_genres.new
+    @index = params[:index].to_i
   end
 
   private

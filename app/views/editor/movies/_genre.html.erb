@@ -1,10 +1,12 @@
 <% dom_id = movies_genre.persisted? ? dom_id(movies_genre) : "#{dom_id(movies_genre)}_#{SecureRandom.hex(8)}"%>
 
-<%= fields_for "movie[movies_genres_attributes][]", movies_genre do |ff| %>
-  <%= turbo_frame_tag dom_id do %>
-    <fieldset class="my-4 flex items-center space-x-2">
-      <%= ff.select :genre_id, Genre.all.map { |genre| [genre.name, genre.id] }, {}, class: "border-0 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:max-w-md sm:text-sm sm:leading-6" %>
-      <%= link_to "Delete genre", editor_destroy_movies_genre_path(dom_id), data: {turbo_stream: true, turbo_method: :delete }, class: "block rounded-md bg-red-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" %>
-    </fieldset>
+<%= fields model: movie do |form| %>
+  <%= form.fields_for :movies_genres, child_index: index do |movies_genre_form| %>
+    <%= turbo_frame_tag "movies_genre_#{movies_genre_form.index}" do %>
+      <fieldset class="my-4 flex items-center space-x-2">
+        <%= movies_genre_form.select :genre_id, Genre.all.map { |genre| [genre.name, genre.id] }, {}, class: "border-0 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:max-w-md sm:text-sm sm:leading-6" %>
+        <%= link_to "Delete genre", editor_destroy_movies_genre_path(dom_id), data: {turbo_stream: true, turbo_method: :delete }, class: "block rounded-md bg-red-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" %>
+      </fieldset>
+    <% end %>
   <% end %>
 <% end %>
