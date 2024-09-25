@@ -111,19 +111,8 @@
             %>
           <% end %>
 
-          <%
-=begin%>
- <%= form.submit "Add task",
-              formaction: editor_create_movies_genre_path(@movie.movies_genres.count),
-              formmethod: :post,
-              formnovalidate: true,
-              id: "add-movies-genre" %>
-<%
-=end%>
-
-
-          <%= turbo_frame_tag "genres", class: "mt-2 flex gap-x-4 flex-wrap" do %>
-            <%= f.fields_for :movies_genres do |movies_genre_form| %>
+          <%= turbo_frame_tag "genres", class: "mt-4 flex gap-x-4 flex-wrap" do %>
+            <%= f.fields_for :movies_genres, include_id: false do |movies_genre_form| %>
               <%= render "movies_genre_form", form: movies_genre_form %>
             <% end %>
           <% end %>
