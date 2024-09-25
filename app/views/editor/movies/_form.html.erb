@@ -6,17 +6,17 @@
       <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
         <!-- Title field -->
         <div class="sm:col-span-4">
-          <%= f.label :title, "Title", class: "block text-sm font-medium leading-6 text-gray-900" %>
+          <%= f.label :title, I18n.t("activerecord.attributes.movie.title"), class: "block text-sm font-medium leading-6 text-gray-900" %>
           <div class="mt-2">
             <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-red-600">
-              <%= f.text_field :title, class: "w-100 block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6", placeholder: "Movie title" %>
+              <%= f.text_field :title, class: "w-100 block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6", placeholder: "鬼滅の刃" %>
             </div>
           </div>
         </div>
 
         <!-- Description field -->
         <div class="col-span-full">
-          <%= f.label :description, "Description", class: "block text-sm font-medium leading-6 text-gray-900" %>
+          <%= f.label :description, I18n.t("activerecord.attributes.movie.description"), class: "block text-sm font-medium leading-6 text-gray-900" %>
           <div class="mt-2">
             <%= f.text_area :description, rows: 3, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6" %>
           </div>
@@ -24,7 +24,7 @@
 
         <!-- Logo field (file upload) -->
         <div class="col-span-full" data-controller="avatar-preview">
-          <%= f.label :logo, "Logo", class: "block text-sm font-medium leading-6 text-gray-900" %>
+          <%= f.label :logo, I18n.t("activerecord.attributes.movie.logo"), class: "block text-sm font-medium leading-6 text-gray-900" %>
           <div class="mt-2 flex flex-col space-y-4 max-w-xs">
             <% if movie.logo.attached? %>
               <%= image_tag movie.logo, data: { avatar_preview_target: "preview" }, class: "object-cover object-center aspect-square rounded-md" %>
@@ -32,13 +32,13 @@
               <%= image_tag "movie_logo_placeholder.png", data: { avatar_preview_target: "preview" }, class: "object-cover object-center aspect-square rounded-md" %>
             <% end %>
             <%= f.file_field :logo, class: "sr-only", id: "logo-upload", data: { avatar_preview_target: "input", action: "change->avatar-preview#preview" } %>
-            <label for="logo-upload" class="text-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">Change</label>
+            <label for="logo-upload" class="text-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"><%= I18n.t("views.editor.movies.new.change") %></label>
           </div>
         </div>
 
         <!-- Cover field (file upload) -->
         <div class="col-span-full" data-controller="avatar-preview">
-          <%= f.label :cover, "Cover", class: "block text-sm font-medium leading-6 text-gray-900" %>
+          <%= f.label :cover, I18n.t("activerecord.attributes.movie.cover"), class: "block text-sm font-medium leading-6 text-gray-900" %>
           <div class="flex flex-col mt-2 space-y-4">
             <% if movie.cover.attached? %>
               <%= image_tag movie.cover, data: { avatar_preview_target: "preview" }, class: "object-cover object-center aspect-video rounded-md" %>
@@ -46,13 +46,13 @@
               <%= image_tag "movie_cover_placeholder.png", data: { avatar_preview_target: "preview" }, class: "object-cover object-center aspect-video rounded-md" %>
             <% end %>
             <%= f.file_field :cover, class: "sr-only", id: "cover-upload", data: { avatar_preview_target: "input", action: "change->avatar-preview#preview" } %>
-            <label for="cover-upload" class="text-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">Change</label>
+            <label for="cover-upload" class="text-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"><%= I18n.t("views.editor.movies.new.change") %></label>
           </div>
         </div>
 
         <!-- Audience radio buttons -->
         <div class="col-span-full">
-          <%= f.label :audience_type, "Audience", class: "text-sm font-medium leading-6 text-gray-900" %>
+          <%= f.label :audience_type, I18n.t("activerecord.attributes.movie.audience"), class: "text-sm font-medium leading-6 text-gray-900" %>
           <div class="mt-2 grid grid-cols-3 gap-3 sm:grid-cols-6">
             <% @audiences.each do |audience| %>
               <div class="flex items-center ps-2 sm:ps-4 border border-gray-200 rounded dark:border-gray-700">
@@ -65,7 +65,7 @@
 
         <!-- Release date -->
         <div class="col-span-full">
-          <%= f.label :released_on, "Released on", class: "text-sm font-medium leading-6 text-gray-900" %>
+          <%= f.label :released_on, I18n.t("activerecord.attributes.movie.released_on"), class: "text-sm font-medium leading-6 text-gray-900" %>
           <div class="mt-2">
             <%= f.date_field :released_on, class: "border-0 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:max-w-md sm:text-sm sm:leading-6" %>
           </div>
@@ -79,8 +79,8 @@
                 <%= f.check_box :featured, class: "h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600" %>
               </div>
               <div class="text-sm leading-6">
-                <%= f.label :featured, "Featured", class: "font-medium text-gray-900" %>
-                <p class="text-gray-500">Feature this movie on the homepage.</p>
+                <%= f.label :featured, I18n.t("activerecord.attributes.movie.featured"), class: "font-medium text-gray-900" %>
+                <p class="text-gray-500"><%= I18n.t("views.editor.movies.new.featured_description") %></p>
               </div>
             </div>
           </div>
@@ -88,7 +88,7 @@
 
         <!-- Publishing Status -->
         <div class="col-span-full">
-          <%= f.label :publishing_status, "Publishing Status", class: "text-sm font-medium leading-6 text-gray-900" %>
+          <%= f.label :publishing_status, I18n.t("activerecord.attributes.movie.publishing_status"), class: "text-sm font-medium leading-6 text-gray-900" %>
           <div class="mt-2 grid grid-cols-3 gap-3 sm:grid-cols-6">
             <% @publishing_statuses.each do |publishing_status| %>
               <div class="flex items-center ps-2 sm:ps-4 border border-gray-200 rounded dark:border-gray-700">
@@ -101,13 +101,16 @@
 
         <!-- Genres -->
         <div class="col-span-full">
-          <%= f.label :genres, "Genres", class: "text-sm font-medium leading-6 text-gray-900 mr-2" %>
+          <%= f.label :genres, I18n.t("activerecord.attributes.movie.genre"), class: "text-sm font-medium leading-6 text-gray-900 mr-2" %>
 
           <%= turbo_frame_tag "add-movies-genre" do %>
-            <%= link_to "Add genre",
-              editor_create_movies_genre_path(movie_id: movie&.id, index: movie&.movies_genres&.count || 0),
-              class: "rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600",
-              data: { turbo_stream: true, turbo_method: :post }
+            <%=
+              render(Common::LinkComponent.new(
+                      text: I18n.t("views.editor.movies.new.add_genre"),
+                      link: editor_create_movies_genre_path(movie_id: @movie.id, index: @movie.movies_genres.count),
+                      display_as_button: true,
+                      options: { data: { turbo_stream: true, turbo_method: :post } }
+                    ))
             %>
           <% end %>
 
@@ -123,7 +126,7 @@
 
   <!-- Submit and Cancel Buttons -->
   <div class="mt-6 flex items-center justify-end gap-x-6">
-    <%= link_to 'Cancel', movies_path, class: "text-sm font-semibold leading-6 text-gray-900" %>
-    <%= f.submit 'Save', class: "rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" %>
+    <%= link_to I18n.t("views.editor.movies.new.cancel"), movies_path, class: "text-sm font-semibold leading-6 text-gray-900" %>
+    <%= f.submit I18n.t("views.editor.movies.new.save"), class: "rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" %>
   </div>
 <% end %>

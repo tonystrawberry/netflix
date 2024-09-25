@@ -1,0 +1,7 @@
+ja:
+  views:
+    editor:
+      header:
+        movies: "映画"
+        genres: "ジャンル"
+        sign_out: "サインアウト"

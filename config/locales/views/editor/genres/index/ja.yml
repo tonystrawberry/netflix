@@ -1,0 +1,12 @@
+ja:
+  views:
+    editor:
+      genres:
+        index:
+          add_genre: "ジャンルを追加"
+          title: "ジャンル"
+          table_headers:
+            key: "キー"
+            name: "名前"
+            actions: "アクション"
+          edit: "編集"

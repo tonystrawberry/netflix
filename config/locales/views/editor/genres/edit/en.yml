@@ -1,0 +1,6 @@
+en:
+  views:
+    editor:
+      genres:
+        edit:
+          title: "Edit a genre"

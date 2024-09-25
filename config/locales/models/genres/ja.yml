@@ -1,0 +1,6 @@
+ja:
+  activerecord:
+    attributes:
+      genre:
+        key: "キー"
+        name: "名前"

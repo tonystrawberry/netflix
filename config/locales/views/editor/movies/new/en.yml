@@ -1,0 +1,12 @@
+en:
+  views:
+    editor:
+      movies:
+        new:
+          title: "Add a new movie"
+          featured_description: "Featured movies are displayed on the home page."
+          change: "Change"
+          add_genre: "Add Genre"
+          delete_genre: "Delete Genre"
+          cancel: "Cancel"
+          save: "Save"

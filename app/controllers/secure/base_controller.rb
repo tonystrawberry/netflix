@@ -15,7 +15,7 @@ class Secure::BaseController < ApplicationController
 
   # Switch the locale for the current request.
   def switch_locale(&action)
-    @current_locale = @current_profile&.language || params[:locale] || I18n.default_locale
+    @current_locale = @current_profile&.language || params[:locale] || cookies[:locale] || I18n.default_locale
     I18n.with_locale(@current_locale, &action)
   end
 end

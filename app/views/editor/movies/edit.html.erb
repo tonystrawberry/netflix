@@ -2,7 +2,7 @@
   <%= render(Editor::HeaderComponent.new) %>
 
   <div class="mx-auto max-w-4xl my-8 px-4">
-    <h2 class="text-base text-xl font-semibold leading-7 text-gray-900">Edit a movie</h2>
+    <h2 class="text-base text-xl font-semibold leading-7 text-gray-900"><%= I18n.t("views.editor.movies.edit.title") %></h2>
 
     <%= render "form", movie: @movie, edit: true %>
   </div>

@@ -1,0 +1,12 @@
+en:
+  views:
+    editor:
+      genres:
+        index:
+          add_genre: "Add Genre"
+          title: "Genres"
+          table_headers:
+            key: "Key"
+            name: "Name"
+            actions: "Actions"
+          edit: "Edit"

@@ -5,7 +5,10 @@ class Editor::BaseController < ApplicationController
 
   # Switch the locale for the current request.
   def switch_locale(&action)
-    @current_locale = params[:locale] || I18n.default_locale
+    @current_locale = params[:locale] || cookies[:locale] || I18n.default_locale
+
+    cookies[:locale] = params[:locale] if params[:locale].present?
+
     I18n.with_locale(@current_locale, &action)
   end
 end

@@ -1,0 +1,15 @@
+ja:
+  views:
+    editor:
+      movies:
+        index:
+          add_movie: "映画を追加"
+          title: "映画"
+          table_headers:
+            title: "タイトル"
+            type: "タイプ"
+            description: "説明"
+            year: "年"
+            status: "ステータス"
+            actions: "アクション"
+          edit: "編集"

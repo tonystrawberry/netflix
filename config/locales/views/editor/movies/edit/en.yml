@@ -1,0 +1,6 @@
+en:
+  views:
+    editor:
+      movies:
+        edit:
+          title: "Edit a movie"

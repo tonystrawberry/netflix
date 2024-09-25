@@ -21,9 +21,9 @@ class MovieDecorator < Draper::Decorator
   def media_type
     case object.media_type.to_sym
     when :movie
-      "Movie"
+      I18n.t("activerecord.attributes.movie.types.movie")
     when :series
-      "Series"
+      I18n.t("activerecord.attributes.movie.types.series")
     end
   end
 
@@ -34,9 +34,9 @@ class MovieDecorator < Draper::Decorator
   def publishing_status
     case object.publishing_status.to_sym
     when :draft
-      h.content_tag(:span, "Draft", class: "rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-700 ring-1 ring-inset ring-gray-600/20")
+      h.content_tag(:span, I18n.t("activerecord.attributes.movie.publishing_statuses.draft"), class: "rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/20")
     when :published
-      h.content_tag(:span, "Published", class: "rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20")
+      h.content_tag(:span, I18n.t("activerecord.attributes.movie.publishing_statuses.published"), class: "rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20")
     end
   end
 

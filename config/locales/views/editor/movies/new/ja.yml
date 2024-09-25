@@ -1,0 +1,12 @@
+ja:
+  views:
+    editor:
+      movies:
+        new:
+          title: "新しい映画を追加"
+          featured_description: "注目の映画はホームページに表示されます。"
+          change: "変更"
+          add_genre: "ジャンルを追加"
+          delete_genre: "ジャンルを削除"
+          cancel: "キャンセル"
+          save: "保存"

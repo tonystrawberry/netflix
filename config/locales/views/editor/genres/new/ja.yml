@@ -1,0 +1,8 @@
+ja:
+  views:
+    editor:
+      genres:
+        new:
+          title: "新しい映画を追加"
+          cancel: "キャンセル"
+          save: "保存"

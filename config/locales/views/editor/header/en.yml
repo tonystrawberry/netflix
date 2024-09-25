@@ -1,0 +1,7 @@
+en:
+  views:
+    editor:
+      header:
+        movies: "Movies"
+        genres: "Genres"
+        sign_out: "Sign Out"

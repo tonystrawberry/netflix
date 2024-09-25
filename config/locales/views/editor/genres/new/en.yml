@@ -1,0 +1,8 @@
+en:
+  views:
+    editor:
+      genres:
+        new:
+          title: "Add a new genre"
+          cancel: "Cancel"
+          save: "Save"

@@ -1,0 +1,15 @@
+en:
+  views:
+    editor:
+      movies:
+        index:
+          add_movie: "Add Movie"
+          title: "Movies"
+          table_headers:
+            title: "Title"
+            type: "Type"
+            description: "Description"
+            year: "Year"
+            status: "Status"
+            actions: "Actions"
+          edit: "Edit"

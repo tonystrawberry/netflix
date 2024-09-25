@@ -9,6 +9,12 @@
     <div class="text-gray-900"><%= @genre.name_ja %></div>
   </td>
   <td class="whitespace-nowrap text-center text-center px-3 py-5 text-sm text-gray-500">
-    <%= link_to "Edit", editor_edit_genre_path(@genre), class: "block rounded-md bg-red-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" %>
+    <%=
+      render(Common::LinkComponent.new(
+              text: I18n.t("views.editor.genres.index.edit"),
+              link: editor_edit_genre_path(@genre),
+              display_as_button: true
+            ))
+    %>
   </td>
 </tr>
