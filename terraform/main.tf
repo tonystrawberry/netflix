@@ -1,6 +1,16 @@
 provider "aws" {
   region = "ap-northeast-1"
+  access_key = var.aws_access_key_id
+  secret_key = var.aws_secret_access_key
 }
+
+variable "environment" {
+  type = string
+  default = "development"
+}
+
+variable "aws_access_key_id" { type = string }
+variable "aws_secret_access_key" { type = string }
 
 data "archive_file" "s3_trigger_aws_lambda_function" {
   type        = "zip"
@@ -9,7 +19,7 @@ data "archive_file" "s3_trigger_aws_lambda_function" {
 }
 
 resource "aws_lambda_function" "s3_trigger_aws_lambda_function" {
-  function_name    = "tonystrawberry-netflix-s3-trigger"
+  function_name    = "tonystrawberry-netflix-s3-trigger-${var.environment}"
   role             = "${aws_iam_role.lambda_aws_iam_role.arn}"
   handler          = "s3_trigger_aws_lambda_function.lambda_handler"
   runtime          = "ruby3.3"
@@ -26,7 +36,7 @@ resource "aws_lambda_function" "s3_trigger_aws_lambda_function" {
 }
 
 resource "aws_iam_role" "lambda_aws_iam_role" {
-  name = "tonystrawberry-netflix-lambda-iam-role"
+  name = "tonystrawberry-netflix-lambda-iam-role-${var.environment}"
 
   assume_role_policy = <<EOF
 {
@@ -53,7 +63,7 @@ resource "aws_iam_role_policy_attachment" "lambda_iam_role_policy_attachment" {
 # Add permission to create logs in CloudWatch
 # and the pass role to media convert role and to do anything on MediaConvert
 resource "aws_iam_policy" "lambda_aws_iam_policy" {
-  name = "tonystrawberry-netflix-lambda-iam-policy"
+  name = "tonystrawberry-netflix-lambda-iam-policy-${var.environment}"
   description = "IAM policy for the API Lambda function"
 
   policy = jsonencode({
@@ -98,12 +108,19 @@ resource "aws_cloudwatch_log_group" "lambda_aws_cloudwatch_log_group" {
   retention_in_days = 30
 }
 
+resource "aws_s3_bucket" "assets_aws_s3_bucket" {
+  bucket = "tonystrawberry-netflix-assets-${var.environment}"
+  force_destroy = true
+}
+
 resource "aws_s3_bucket" "input_video_aws_s3_bucket" {
-  bucket = "tonystrawberry-netflix-input-video"
+  bucket = "tonystrawberry-netflix-input-video-${var.environment}"
+  force_destroy = true
 }
 
 resource "aws_s3_bucket" "output_video_aws_s3_bucket" {
-  bucket = "tonystrawberry-netflix-output-video"
+  bucket = "tonystrawberry-netflix-output-video-${var.environment}"
+  force_destroy = true
 }
 
 # Add a CORS configuration to the S3 output bucket
@@ -127,8 +144,6 @@ resource "aws_s3_bucket_notification" "s3_trigger_aws_s3_bucket_notification" {
   }
 }
 
-
-
 resource "aws_lambda_permission" "allow_s3_trigger_aws_lambda_permission" {
   statement_id  = "AllowS3Invoke"
   action        = "lambda:InvokeFunction"
@@ -146,7 +161,7 @@ output "aws_lambda_function_arn" {
 }
 
 resource "aws_iam_role" "media_convert_aws_iam_role" {
-  name = "tonystrawberry-netflix-media-convert-iam-role"
+  name = "tonystrawberry-netflix-media-convert-iam-role-${var.environment}"
 
   assume_role_policy = <<EOF
 {
@@ -166,7 +181,7 @@ EOF
 
 # Grand permission to access the input and output S3 bucket
 resource "aws_iam_policy" "media_convert_aws_iam_policy" {
-  name = "tonystrawberry-netflix-media-convert-iam-policy"
+  name = "tonystrawberry-netflix-media-convert-iam-policy-${var.environment}"
   description = "IAM policy for the MediaConvert role"
 
   policy = jsonencode({

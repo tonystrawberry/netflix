@@ -17,8 +17,9 @@
 class Movie < ApplicationRecord
   has_prefix_id :movie
 
-  has_one_attached :cover
-  has_one_attached :logo
+  has_one_attached :cover, service: :amazon_s3_assets
+  has_one_attached :logo, service: :amazon_s3_assets
+  has_one_attached :video, service: :amazon_s3_input_videos
 
   enum publishing_status: { draft: 0, published: 1 }, _prefix: true
   enum audience_type: { all: 0, kids_7: 1, kids_12: 2, teens_13: 3, adults_16: 4, adults_18: 5 }, _prefix: true
@@ -35,7 +36,7 @@ class Movie < ApplicationRecord
   validates :publishing_status, presence: true
   validates :audience_type, presence: true
   validates :media_type, presence: true
-  validates :featured, inclusion: { in: [true, false] }
+  validates :featured, inclusion: { in: [ true, false ] }
 
   scope :published, -> { where(publishing_status: :published) }
 

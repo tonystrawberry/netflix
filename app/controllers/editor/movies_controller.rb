@@ -58,7 +58,7 @@ class Editor::MoviesController < Editor::BaseController
   end
 
   def create_genre
-    @movie = Movie.new(movies_genres: [MoviesGenre.new])
+    @movie = Movie.new(movies_genres: [ MoviesGenre.new ])
     @index = params[:index].to_i
   end
 
@@ -73,8 +73,9 @@ class Editor::MoviesController < Editor::BaseController
       :featured,
       :cover,
       :logo,
+      :video,
       :publishing_status,
-      movies_genres_attributes: [:genre_id]
+      movies_genres_attributes: [ :genre_id ]
     )
   end
 end
