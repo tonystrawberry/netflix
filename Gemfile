@@ -80,3 +80,5 @@ gem "prefixed_ids", "~> 1.8", ">= 1.8.1"
 gem "draper", "~> 4.0"
 
 gem "aws-sdk-s3", "~> 1.167"
+
+gem "solid_queue", "~> 1.0"

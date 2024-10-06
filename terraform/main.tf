@@ -29,7 +29,7 @@ resource "aws_lambda_function" "s3_trigger_aws_lambda_function" {
 
   environment {
     variables = {
-      DestinationBucket = "${aws_s3_bucket.output_video_aws_s3_bucket.bucket}"
+      DestinationBucket = "${aws_s3_bucket.output_assets_aws_s3_bucket.bucket}"
       MediaConvertRole = "${aws_iam_role.media_convert_aws_iam_role.arn}"
     }
   }
@@ -69,6 +69,17 @@ resource "aws_iam_policy" "lambda_aws_iam_policy" {
   policy = jsonencode({
     Version   = "2012-10-17"
     Statement = [
+      {
+        Effect   = "Allow"
+        Action   = [
+          "s3:ListBucket",
+          "s3:GetObject"
+        ]
+        Resource = [
+          "${aws_s3_bucket.assets_aws_s3_bucket.arn}",
+          "${aws_s3_bucket.assets_aws_s3_bucket.arn}/*"
+        ]
+      },
       {
         Effect   = "Allow"
         Action   = [
@@ -113,19 +124,14 @@ resource "aws_s3_bucket" "assets_aws_s3_bucket" {
   force_destroy = true
 }
 
-resource "aws_s3_bucket" "input_video_aws_s3_bucket" {
-  bucket = "tonystrawberry-netflix-input-video-${var.environment}"
-  force_destroy = true
-}
-
-resource "aws_s3_bucket" "output_video_aws_s3_bucket" {
-  bucket = "tonystrawberry-netflix-output-video-${var.environment}"
+resource "aws_s3_bucket" "output_assets_aws_s3_bucket" {
+  bucket = "tonystrawberry-netflix-output-assets-${var.environment}"
   force_destroy = true
 }
 
 # Add a CORS configuration to the S3 output bucket
-resource "aws_s3_bucket_cors_configuration" "output_video_aws_s3_bucket_cors_configuration" {
-  bucket = aws_s3_bucket.output_video_aws_s3_bucket.bucket
+resource "aws_s3_bucket_cors_configuration" "output_assets_aws_s3_bucket_cors_configuration" {
+  bucket = aws_s3_bucket.output_assets_aws_s3_bucket.bucket
 
   cors_rule {
     allowed_headers = ["*"]
@@ -136,11 +142,10 @@ resource "aws_s3_bucket_cors_configuration" "output_video_aws_s3_bucket_cors_con
 }
 
 resource "aws_s3_bucket_notification" "s3_trigger_aws_s3_bucket_notification" {
-  bucket = aws_s3_bucket.input_video_aws_s3_bucket.bucket
+  bucket = aws_s3_bucket.assets_aws_s3_bucket.bucket
   lambda_function {
     lambda_function_arn = aws_lambda_function.s3_trigger_aws_lambda_function.arn
     events              = ["s3:ObjectCreated:*"]
-    filter_suffix       = ".mp4"
   }
 }
 
@@ -149,11 +154,11 @@ resource "aws_lambda_permission" "allow_s3_trigger_aws_lambda_permission" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.s3_trigger_aws_lambda_function.function_name
   principal     = "s3.amazonaws.com"
-  source_arn    = aws_s3_bucket.input_video_aws_s3_bucket.arn
+  source_arn    = aws_s3_bucket.assets_aws_s3_bucket.arn
 }
 
-resource "aws_s3_bucket_notification" "output_video_aws_s3_bucket_notification" {
-  bucket = aws_s3_bucket.output_video_aws_s3_bucket.bucket
+resource "aws_s3_bucket_notification" "output_assets_aws_s3_bucket_notification" {
+  bucket = aws_s3_bucket.output_assets_aws_s3_bucket.bucket
 }
 
 output "aws_lambda_function_arn" {
@@ -194,8 +199,8 @@ resource "aws_iam_policy" "media_convert_aws_iam_policy" {
           "s3:PutObject"
         ]
         Resource = [
-          "${aws_s3_bucket.input_video_aws_s3_bucket.arn}/*",
-          "${aws_s3_bucket.output_video_aws_s3_bucket.arn}/*"
+          "${aws_s3_bucket.assets_aws_s3_bucket.arn}/*",
+          "${aws_s3_bucket.output_assets_aws_s3_bucket.arn}/*"
         ]
       }
     ]

@@ -9,6 +9,8 @@ require 'active_support/core_ext/hash'
 require 'active_support/core_ext/string'
 
 def lambda_handler(event:, context:)
+  puts "Received event: #{JSON.generate(event)}"
+  puts "Received context: #{JSON.generate(context)}"
   folder_name = event['Records'][0]['s3']['object']['key'].split('/')[0]
   source_s3_bucket = event['Records'][0]['s3']['bucket']['name']
   source_s3_key = event['Records'][0]['s3']['object']['key']
@@ -19,6 +21,21 @@ def lambda_handler(event:, context:)
   region = "ap-northeast-1"
   status_code = 200
   body = {}
+
+  # Skip if the source is not a video file by checking file metadata `Content-Type`
+  # Only get the object metadata to reduce the cost
+  s3 = Aws::S3::Client.new(region: region)
+  object = s3.head_object(bucket: source_s3_bucket, key: source_s3_key)
+  content_type = object.content_type
+
+  unless content_type == 'video/mp4'
+    puts "Skipped non-video file: #{content_type}"
+    status_code = 204
+    body = { message: 'Skipped non-video file' }
+    return
+  end
+
+  puts "Processing video file: #{source_s3}"
 
   # Use MediaConvert SDK UserMetadata to tag jobs with the assetID
   # Events from MediaConvert will have the assetID in UserMetadata
