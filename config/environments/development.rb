@@ -81,4 +81,7 @@ Rails.application.configure do
 
   # Queue jobs with the `solid_queue` gem.
   config.active_job.queue_adapter = :solid_queue
+
+  # Set hosts for Rails to accept requests from
+  config.hosts << "local.tonyfromtokyo.online:3000"
 end
