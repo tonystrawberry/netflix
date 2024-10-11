@@ -3,8 +3,8 @@ class ApplicationController < ActionController::Base
   # allow_browser versions: :modern
 
   around_action :switch_locale
-  before_action :redirect_to_home, if: -> { user_signed_in? && !controller_path.start_with?('secure/') }
-  before_action :redirect_to_editor_home, if: -> { administrator_signed_in? && !controller_path.start_with?('editor/') }
+  before_action :redirect_to_home, if: -> { user_signed_in? && !controller_path.start_with?("secure/") }
+  before_action :redirect_to_editor_home, if: -> { administrator_signed_in? && !controller_path.start_with?("editor/") }
 
   private
 

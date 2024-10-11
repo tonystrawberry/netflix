@@ -16,10 +16,10 @@
     <%= javascript_importmap_tags %>
     <%= hotwire_livereload_tags if Rails.env.development? %>
 
-    <script src="//cdn.jsdelivr.net/npm/hls.js@1"></script>
-
+    <%=# Reference: videojs (https://videojs.com/) %>
     <script src="//vjs.zencdn.net/8.18.1/video.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/videojs-hls-quality-selector@2.0.0/dist/videojs-hls-quality-selector.min.js"></script>
+    <%=# Reference: videojs-hls-quality-selector (https://videojs.com/plugins/) %>
+    <script src="//cdn.jsdelivr.net/npm/videojs-hls-quality-selector@2.0.0/dist/videojs-hls-quality-selector.min.js"></script>
   </head>
 
   <body>

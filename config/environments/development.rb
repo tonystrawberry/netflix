@@ -87,6 +87,10 @@ Rails.application.configure do
   config.hosts << "tonyfromtokyo.online:3000"
   config.hosts << "netflix.tonyfromtokyo.online:3000"
 
-  # Use SSL in development
+  # Use SSL in development.
+  # In order to test the signed cookie for the CloudFront distribution, we need to use SSL in development.
+  # Without it, the browser will not set the cookie in the headers of the request to the CloudFront distribution (which is HTTPS).
+  # Reference: https://stackoverflow.com/questions/79072634/the-cookie-header-is-not-sent-with-the-fetch-get-request-to-cloudfront-why
+  # Files required for using SSL can be found in `config/ssl` (see `config/ssl/README.md` for more information).
   config.force_ssl = true
 end
