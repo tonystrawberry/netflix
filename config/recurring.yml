@@ -1,0 +1,4 @@
+production:
+  check_hls_videos:
+    class: CheckHlsVideos
+    schedule: every minute

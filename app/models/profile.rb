@@ -25,7 +25,7 @@ class Profile < ApplicationRecord
 
   belongs_to :user
 
-  has_one_attached :avatar
+  has_one_attached :avatar, service: :amazon_s3_assets
 
   validates :name, presence: true
   validates :code, presence: true, uniqueness: true
@@ -34,6 +34,7 @@ class Profile < ApplicationRecord
   enum :language, I18n.available_locales
 
   before_validation :generate_code, on: :create
+  before_save :customize_active_storage_key
 
   private
 
@@ -41,5 +42,13 @@ class Profile < ApplicationRecord
   # @return [void]
   def generate_code
     self.code = SecureRandom.hex(8)
+  end
+
+  # Customize the Active Storage key for the attached files.
+  # @return [void]
+  def customize_active_storage_key
+    if avatar.attached?
+      avatar.blob.update(key: "profiles/#{self.id}/avatar_#{avatar.blob.filename}")
+    end
   end
 end

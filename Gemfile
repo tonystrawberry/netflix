@@ -44,7 +44,7 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 
-  gem 'dotenv'
+  gem "dotenv"
   gem "faker", "~> 3.4"
 end
 
@@ -73,8 +73,14 @@ gem "rails-i18n", "~> 7.0.0" # For 7.0.0
 
 gem "honeybadger", "~> 5.15"
 
-gem 'mobility', '~> 1.3.0.rc3'
+gem "mobility", "~> 1.3.0.rc3"
 
-gem 'prefixed_ids', '~> 1.8', '>= 1.8.1'
+gem "prefixed_ids", "~> 1.8", ">= 1.8.1"
 
 gem "draper", "~> 4.0"
+
+gem "aws-sdk-s3", "~> 1.167"
+
+gem "solid_queue", "~> 1.0"
+
+gem "aws-sdk-cloudfront", "~> 1.102"

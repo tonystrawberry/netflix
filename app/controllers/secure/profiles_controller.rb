@@ -1,4 +1,4 @@
-require 'open-uri'
+require "open-uri"
 
 class Secure::ProfilesController < Secure::BaseController
   skip_before_action :set_current_profile!
@@ -18,7 +18,7 @@ class Secure::ProfilesController < Secure::BaseController
     if @profile.save
       unless @profile.avatar.attached?
         downloaded_random_avatar = OpenURI.open_uri("https://avatar.iran.liara.run/public")
-        @profile.avatar.attach(io: downloaded_random_avatar, filename: "avatar_#{@profile.code}.jpg")
+        @profile.avatar.attach(io: downloaded_random_avatar, filename: "#{@profile.code}/avatar.jpg")
       end
 
       redirect_to profiles_path

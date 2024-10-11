@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   scope module: :secure do
     controller :movies do
       get "/movies" => :index
+      get "/movies/:id" => :show, as: :movie
     end
 
     controller :profiles do

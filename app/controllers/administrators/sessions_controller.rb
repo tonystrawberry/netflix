@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Administrators::SessionsController < Devise::SessionsController
-  skip_before_action :redirect_to_editor_home, only: [:destroy]
+  skip_before_action :redirect_to_editor_home, only: [ :destroy ]
 
   # before_action :configure_sign_in_params, only: [:create]
 
