@@ -30,7 +30,7 @@ two:
   description: <%= Faker::Lorem.paragraph %>
   featured: <%= [true, false].sample %>
   media_type: <%= Movie.media_types.keys.sample %>
-  published_at:
+  published_at: <%= Faker::Date.between(from: 1.year.ago, to: Date.today) %>
   publishing_status: <%= Movie.publishing_statuses[:draft] %>
   released_on: <%= Faker::Date.between(from: 10.years.ago, to: 1.year.ago) %>
   title: <%= Faker::Movie.title %>
