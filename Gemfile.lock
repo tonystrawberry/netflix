@@ -157,7 +157,8 @@ GEM
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashids (1.0.6)
-    honeybadger (5.15.6)
+    honeybadger (5.16.0)
+      logger
     hotwire-livereload (1.4.1)
       actioncable (>= 6.0.0)
       listen (>= 3.0.0)
@@ -414,7 +415,7 @@ DEPENDENCIES
   dotenv
   draper (~> 4.0)
   faker (~> 3.4)
-  honeybadger (~> 5.15)
+  honeybadger (~> 5.16)
   hotwire-livereload (~> 1.4)
   importmap-rails
   jbuilder
