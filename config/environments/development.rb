@@ -84,4 +84,9 @@ Rails.application.configure do
 
   # Set hosts for Rails to accept requests from
   config.hosts << "local.tonyfromtokyo.online:3000"
+  config.hosts << "tonyfromtokyo.online:3000"
+  config.hosts << "netflix.tonyfromtokyo.online:3000"
+
+  # Use SSL in development
+  config.force_ssl = true
 end

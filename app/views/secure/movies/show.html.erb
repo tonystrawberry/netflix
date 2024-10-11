@@ -1,11 +1,18 @@
-<div data-controller="video-player" data-video-player-video-url-value="<%= @cdn_url %>" class="bg-black flex justify-center">
+<div data-controller="video-player" data-video-player-video-url-value="<%= @cdn_url %>" class="">
   <%= link_to movies_path, class: "absolute left-12 top-12 text-gray-300 cursor-pointer z-10" do %>
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-12 h-12">
       <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
     </svg>
   <% end %>
 
-  <video class="h-lvh bg-black" data-video-player-target="video" controls>
+  <%= @cdn_url %>
+
+  <video
+    id="video-player"
+    data-video-player-target="video"
+    controls
+    width="800" height="600"
+  >
 
   </video>
 </div>

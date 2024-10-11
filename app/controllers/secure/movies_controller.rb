@@ -3,7 +3,7 @@ class Secure::MoviesController < Secure::BaseController
     @genres = Genre.includes(:movies)
 
     @movies = @genres.each_with_object({}) do |genre, hash|
-      hash[genre] = genre.movies
+      hash[genre] = genre.movies.joins(:hls_video_attachment)
     end
   end
 
@@ -27,7 +27,7 @@ class Secure::MoviesController < Secure::BaseController
 
     signer.signed_cookie(
       nil,
-      policy: policy(s3_key, Time.zone.now + 1.minute)
+      policy: policy(s3_key, Time.zone.now + 15.minute)
     ).each do |key, value|
       cookies[key] = {
         value: value,
@@ -38,10 +38,14 @@ class Secure::MoviesController < Secure::BaseController
 
   # The policy for the signed cookie
   def policy(s3_key, expiry)
+    # The S3 key looks like this mm57enm1nx2u91ztntbu2idxxror/HLS/mm57enm1nx2u91ztntbu2idxxror.m3u8
+    # But I would like the "Resource" to omit the file extension
+    resource_key = s3_key.split(".")[0]
+
     {
       "Statement" => [
         {
-          "Resource" => "#{ENV["CLOUDFRONT_URL"]}/#{s3_key}*",
+          "Resource" => "#{ENV["CLOUDFRONT_URL"]}/#{resource_key}*",
           "Condition" => {
             "DateLessThan" => {
               "AWS:EpochTime" => expiry.utc.to_i
