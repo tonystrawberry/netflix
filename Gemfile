@@ -84,3 +84,5 @@ gem "aws-sdk-s3", "~> 1.167"
 gem "solid_queue", "~> 1.0"
 
 gem "aws-sdk-cloudfront", "~> 1.102"
+
+gem "aws-sdk-mediaconvert", "~> 1.142"

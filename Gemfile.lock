@@ -94,6 +94,9 @@ GEM
     aws-sdk-kms (1.94.0)
       aws-sdk-core (~> 3, >= 3.207.0)
       aws-sigv4 (~> 1.5)
+    aws-sdk-mediaconvert (1.142.0)
+      aws-sdk-core (~> 3, >= 3.207.0)
+      aws-sigv4 (~> 1.5)
     aws-sdk-s3 (1.167.0)
       aws-sdk-core (~> 3, >= 3.207.0)
       aws-sdk-kms (~> 1)
@@ -405,6 +408,7 @@ PLATFORMS
 DEPENDENCIES
   annotate (~> 3.2)
   aws-sdk-cloudfront (~> 1.102)
+  aws-sdk-mediaconvert (~> 1.142)
   aws-sdk-s3 (~> 1.167)
   bootsnap
   brakeman
