@@ -12,113 +12,6 @@ variable "environment" {
 variable "aws_access_key_id" { type = string }
 variable "aws_secret_access_key" { type = string }
 
-data "archive_file" "s3_trigger_aws_lambda_function" {
-  type        = "zip"
-  source_dir  = "lambda"
-  output_path = "lambda/s3_trigger_aws_lambda_function.zip"
-}
-
-resource "aws_lambda_function" "s3_trigger_aws_lambda_function" {
-  function_name    = "tonystrawberry-netflix-s3-trigger-${var.environment}"
-  role             = "${aws_iam_role.lambda_aws_iam_role.arn}"
-  handler          = "s3_trigger_aws_lambda_function.lambda_handler"
-  runtime          = "ruby3.3"
-  timeout          = "600"
-  filename         = "${data.archive_file.s3_trigger_aws_lambda_function.output_path}"
-  source_code_hash = "${data.archive_file.s3_trigger_aws_lambda_function.output_base64sha256}"
-
-  environment {
-    variables = {
-      DestinationBucket = "${aws_s3_bucket.output_assets_aws_s3_bucket.bucket}"
-      MediaConvertRole = "${aws_iam_role.media_convert_aws_iam_role.arn}"
-    }
-  }
-}
-
-resource "aws_iam_role" "lambda_aws_iam_role" {
-  name = "tonystrawberry-netflix-lambda-iam-role-${var.environment}"
-
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      },
-      "Effect": "Allow",
-      "Sid": ""
-    }
-  ]
-}
-EOF
-}
-
-resource "aws_iam_role_policy_attachment" "lambda_iam_role_policy_attachment" {
-  role       = aws_iam_role.lambda_aws_iam_role.name
-  policy_arn = aws_iam_policy.lambda_aws_iam_policy.arn
-}
-
-# Add permission to create logs in CloudWatch
-# and the pass role to media convert role and to do anything on MediaConvert
-resource "aws_iam_policy" "lambda_aws_iam_policy" {
-  name = "tonystrawberry-netflix-lambda-iam-policy-${var.environment}"
-  description = "IAM policy for the API Lambda function"
-
-  policy = jsonencode({
-    Version   = "2012-10-17"
-    Statement = [
-      {
-        Effect   = "Allow"
-        Action   = [
-          "s3:ListBucket",
-          "s3:GetObject"
-        ]
-        Resource = [
-          "${aws_s3_bucket.assets_aws_s3_bucket.arn}",
-          "${aws_s3_bucket.assets_aws_s3_bucket.arn}/*"
-        ]
-      },
-      {
-        Effect   = "Allow"
-        Action   = [
-          "logs:CreateLogGroup",
-          "logs:CreateLogStream",
-          "logs:PutLogEvents"
-        ]
-        Resource = [
-          aws_cloudwatch_log_group.lambda_aws_cloudwatch_log_group.arn,
-          "${aws_cloudwatch_log_group.lambda_aws_cloudwatch_log_group.arn}:*"
-        ]
-      },
-      {
-        Effect   = "Allow"
-        Action   = [
-          "iam:PassRole"
-        ]
-        Resource = [
-          aws_iam_role.media_convert_aws_iam_role.arn
-        ]
-      },
-      {
-        Effect   = "Allow"
-        Action   = [
-          "mediaconvert:*"
-        ]
-        Resource = [
-          "*"
-        ]
-      }
-    ]
-  })
-}
-
-resource "aws_cloudwatch_log_group" "lambda_aws_cloudwatch_log_group" {
-  name = "/aws/lambda/${aws_lambda_function.s3_trigger_aws_lambda_function.function_name}"
-  retention_in_days = 30
-}
-
 resource "aws_s3_bucket" "assets_aws_s3_bucket" {
   bucket = "tonystrawberry-netflix-assets-${var.environment}"
   force_destroy = true
@@ -191,7 +84,7 @@ resource "aws_cloudfront_response_headers_policy" "output_assets_aws_cloudfront_
     }
 
     access_control_allow_origins {
-      items = ["http://local.tonyfromtokyo.online:3000", "https://netflix.tonyfromtokyo.online"]
+      items = ["https://tonyfromtokyo.online:3000", "https://netflix.tonyfromtokyo.online"]
     }
 
     access_control_expose_headers {
@@ -211,6 +104,16 @@ resource "aws_cloudfront_origin_access_control" "output_assets_aws_cloudfront_or
   signing_protocol                  = "sigv4"
 }
 
+resource "aws_s3_bucket_cors_configuration" "assets_aws_s3_bucket_cors_configuration" {
+  bucket = aws_s3_bucket.assets_aws_s3_bucket.bucket
+
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["GET", "HEAD", "POST", "PUT"]
+    allowed_origins = ["https://tonyfromtokyo.online:3000"]
+    expose_headers  = []
+  }
+}
 
 # Add a CORS configuration to the S3 output bucket
 resource "aws_s3_bucket_cors_configuration" "output_assets_aws_s3_bucket_cors_configuration" {
@@ -219,7 +122,7 @@ resource "aws_s3_bucket_cors_configuration" "output_assets_aws_s3_bucket_cors_co
   cors_rule {
     allowed_headers = ["*"]
     allowed_methods = ["GET", "HEAD", "POST", "PUT"]
-    allowed_origins = ["http://local.tonyfromtokyo.online:3000", "https://netflix.tonyfromtokyo.online"]
+    allowed_origins = ["https://tonyfromtokyo.online:3000", "https://netflix.tonyfromtokyo.online"]
     expose_headers  = []
   }
 }
@@ -253,15 +156,6 @@ data "aws_iam_policy_document" "output_assets_data_iam_policy_documents" {
   }
 }
 
-
-resource "aws_s3_bucket_notification" "s3_trigger_aws_s3_bucket_notification" {
-  bucket = aws_s3_bucket.assets_aws_s3_bucket.bucket
-  lambda_function {
-    lambda_function_arn = aws_lambda_function.s3_trigger_aws_lambda_function.arn
-    events              = ["s3:ObjectCreated:*"]
-  }
-}
-
 # https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-trusted-signers.html#choosing-key-groups-or-AWS-accounts
 resource "aws_cloudfront_public_key" "output_assets_aws_cloudfront_public_key" {
   encoded_key = file("files/output_assets_aws_cloudfront_public_key.pem")
@@ -273,20 +167,8 @@ resource "aws_cloudfront_key_group" "output_assets_aws_cloudfront_public_key_gro
   name    = "tonystrawberry-netflix-output-assets-${var.environment}"
 }
 
-resource "aws_lambda_permission" "allow_s3_trigger_aws_lambda_permission" {
-  statement_id  = "AllowS3Invoke"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.s3_trigger_aws_lambda_function.function_name
-  principal     = "s3.amazonaws.com"
-  source_arn    = aws_s3_bucket.assets_aws_s3_bucket.arn
-}
-
 resource "aws_s3_bucket_notification" "output_assets_aws_s3_bucket_notification" {
   bucket = aws_s3_bucket.output_assets_aws_s3_bucket.bucket
-}
-
-output "aws_lambda_function_arn" {
-  value = aws_lambda_function.s3_trigger_aws_lambda_function.arn
 }
 
 resource "aws_iam_role" "media_convert_aws_iam_role" {

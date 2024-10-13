@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_06_070030) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_13_125505) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -98,6 +98,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_06_070030) do
     t.datetime "published_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "media_convert_status", default: 0, null: false
+    t.integer "media_convert_progress_percentage"
+    t.string "media_convert_job_id"
   end
 
   create_table "movies_genres", force: :cascade do |t|

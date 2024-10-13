@@ -3,17 +3,17 @@ class MediaConvert::Base
 
   def initialize
     client = Aws::MediaConvert::Client.new(
-      region: "ap-northeast-1",
-      access_key_id: Rails.application.credentials.dig(:aws, :access_key_id),
-      secret_access_key: Rails.application.credentials.dig(:aws, :secret_access_key)
+      region: ENV["AWS_REGION"],
+      access_key_id: ENV["AWS_ACCESS_KEY_ID"],
+      secret_access_key: ENV["AWS_SECRET_ACCESS_KEY"]
     )
 
     endpoints = client.describe_endpoints
 
     @client = Aws::MediaConvert::Client.new(
-      region: "ap-northeast-1",
-      access_key_id: Rails.application.credentials.dig(:aws, :access_key_id),
-      secret_access_key: Rails.application.credentials.dig(:aws, :secret_access_key),
+      region: ENV["AWS_REGION"],
+      access_key_id: ENV["AWS_ACCESS_KEY_ID"],
+      secret_access_key: ENV["AWS_SECRET_ACCESS_KEY"],
       endpoint: endpoints.endpoints[0].url
     )
   end

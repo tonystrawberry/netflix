@@ -36,7 +36,11 @@
           <div class="whitespace-nowrap">
             <% movies.each do |movie| %>
               <%= link_to movie_path(movie.id), class: "inline-block w-60 h-32 overflow-hidden rounded" do %>
-                <%= image_tag movie.cover, class: "w-full h-full object-cover object-center", alt: movie.title %>
+                <% if movie.cover.attached? %>
+                  <%= image_tag movie.cover, class: "w-full h-full object-cover object-center", alt: movie.title %>
+                <% else %>
+                  <%= image_tag "movie_cover_placeholder.png", class: "w-full h-full object-cover object-center", alt: movie.title %>
+                <% end %>
               <% end %>
             <% end %>
           </div>
