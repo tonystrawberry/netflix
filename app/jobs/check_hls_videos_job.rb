@@ -3,39 +3,49 @@ require "aws-sdk-s3"
 class CheckHlsVideosJob < ApplicationJob
   queue_as :default
 
-  def perform
-    # Get all movies with video attached and HLS video not attached
-    Movie.with_attached_video.without_attached_hls_video.find_each do |movie|
-      # Get the key of the attached video
-      key = movie.video.key
+  rescue_from StandardError do |exception|
+    Rails.logger.error(exception)
 
-      # Check the `bucket` specified in the `config/storage.yml` (amazon_s3_output_assets)
-      # for the HLS video with the key of the attached video
-      # and attach the HLS video to the movie
+    @movie.update!(media_convert_status: :internal_error)
+  end
 
-      s3_client = Aws::S3::Client.new(region: "ap-northeast-1", access_key_id: Rails.application.credentials.dig(:aws, :access_key_id), secret_access_key: Rails.application.credentials.dig(:aws, :secret_access_key))
+  def perform(movie_id:)
+    @movie = Movie.find(movie_id)
 
-      s3_object = nil
-      begin
-        s3_object = s3_client.head_object(bucket: "tonystrawberry-netflix-output-assets-development", key: "#{key}/HLS/#{key}.m3u8")
-      rescue Aws::S3::Errors::NotFound
-        # The HLS video is not found
-        return
-      end
+    inspect_result = MediaConvert::Inspector.new.inspect(job_id: @movie.media_convert_job_id)
 
-      puts s3_object.inspect
+    @movie.update!(media_convert_status: inspect_result[:status].downcase.to_sym, media_convert_progress_percentage: inspect_result[:percentage])
 
-      ActiveRecord::Base.transaction do
-        blob = ActiveStorage::Blob.create!(
-          key: "#{key}/HLS/#{key}.m3u8",
-          filename: "#{key}.m3u8",
-          content_type: "application/vnd.apple.mpegurl",
-          service_name: "amazon_s3_output_assets",
-          byte_size: s3_object.content_length,
-          checksum: s3_object.etag.gsub(/"/, ""),
-        )
-        movie.hls_video.attach(blob)
-      end
+
+    case inspect_result[:status]
+    when "SUBMITTED", "PROGRESSING"
+      CheckHlsVideosJob.set(wait: 15.seconds).perform_later(movie_id: @movie.id)
+    when "COMPLETE"
+      attach_hls_video(movie: @movie, output_s3_key: inspect_result[:output_s3_key])
+    when "CANCELED", "ERROR"
+    end
+  end
+
+  private
+
+  def attach_hls_video(movie:, output_s3_key:)
+    # Check the `bucket` specified in the `config/storage.yml` (amazon_s3_output_assets)
+    # for the HLS video with the key of the attached video
+    # and attach the HLS video to the movie
+    s3_client = Aws::S3::Client.new(region: "ap-northeast-1", access_key_id: ENV["AWS_ACCESS_KEY_ID"], secret_access_key: ENV["AWS_SECRET_ACCESS_KEY"])
+
+    s3_object = s3_client.head_object(bucket: "tonystrawberry-netflix-output-assets-development", key: output_s3_key)
+
+    ActiveRecord::Base.transaction do
+      blob = ActiveStorage::Blob.create!(
+        key: output_s3_key,
+        filename: output_s3_key.split("/").last,
+        content_type: "application/vnd.apple.mpegurl",
+        service_name: "amazon_s3_output_assets",
+        byte_size: s3_object.content_length,
+        checksum: s3_object.etag.gsub(/"/, ""),
+      )
+      movie.hls_video.attach(blob)
     end
   end
 end

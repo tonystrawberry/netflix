@@ -211,6 +211,16 @@ resource "aws_cloudfront_origin_access_control" "output_assets_aws_cloudfront_or
   signing_protocol                  = "sigv4"
 }
 
+resource "aws_s3_bucket_cors_configuration" "assets_aws_s3_bucket_cors_configuration" {
+  bucket = aws_s3_bucket.assets_aws_s3_bucket.bucket
+
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["GET", "HEAD", "POST", "PUT"]
+    allowed_origins = ["https://tonyfromtokyo.online:3000"]
+    expose_headers  = []
+  }
+}
 
 # Add a CORS configuration to the S3 output bucket
 resource "aws_s3_bucket_cors_configuration" "output_assets_aws_s3_bucket_cors_configuration" {
@@ -219,7 +229,7 @@ resource "aws_s3_bucket_cors_configuration" "output_assets_aws_s3_bucket_cors_co
   cors_rule {
     allowed_headers = ["*"]
     allowed_methods = ["GET", "HEAD", "POST", "PUT"]
-    allowed_origins = ["http://local.tonyfromtokyo.online:3000", "https://netflix.tonyfromtokyo.online"]
+    allowed_origins = ["https://tonyfromtokyo.online:3000", "https://netflix.tonyfromtokyo.online"]
     expose_headers  = []
   }
 }

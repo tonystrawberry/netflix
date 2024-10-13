@@ -14,14 +14,18 @@ class Editor::MoviesController < Editor::BaseController
   def create
     @movie = Movie.new(movie_params)
 
-    if @movie.save
-      redirect_to editor_movies_path
-    else
-      @genres = Genre.all
-      @audiences = Movie.audience_types.keys
-      @publishing_statuses = Movie.publishing_statuses.keys
+    ActiveRecord::Base.transaction do
+      if @movie.save
+        ConvertVideoToHlsFormatJob.perform_later(movie_id: id)
 
-      render :new, status: :unprocessable_entity
+        redirect_to editor_movies_path
+      else
+        @genres = Genre.all
+        @audiences = Movie.audience_types.keys
+        @publishing_statuses = Movie.publishing_statuses.keys
+
+        render :new, status: :unprocessable_entity
+      end
     end
   end
 
@@ -43,6 +47,8 @@ class Editor::MoviesController < Editor::BaseController
     end
 
     if success
+      ConvertVideoToHlsFormatJob.perform_later(movie_id: @movie.id) if params[:movie][:video].present?
+
       redirect_to editor_movies_path
     else
       @genres = Genre.all
