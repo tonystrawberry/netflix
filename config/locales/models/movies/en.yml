@@ -26,3 +26,10 @@ en:
         publishing_status: "Publishing Status"
         genre: "Genre"
         video: "Video"
+        media_convert_statuses:
+          submitted: "Conversion Requested"
+          progressing: "Converting"
+          complete: "Converted"
+          canceled: "Conversion Canceled"
+          error: "Conversion Error"
+          internal_error: "Internal Error"

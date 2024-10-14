@@ -10,6 +10,7 @@ ja:
             type: "タイプ"
             description: "説明"
             year: "年"
+            media_convert_status: "メディア変換ステータス"
             status: "ステータス"
             actions: "アクション"
           edit: "編集"

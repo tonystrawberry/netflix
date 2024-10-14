@@ -10,6 +10,7 @@ en:
             type: "Type"
             description: "Description"
             year: "Year"
+            media_convert_status: "Media Convert Status"
             status: "Status"
             actions: "Actions"
           edit: "Edit"

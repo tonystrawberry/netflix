@@ -19,5 +19,16 @@ module.exports = {
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
     require('@tailwindcss/container-queries'),
-  ]
+  ],
+  safelist: [
+    {
+      pattern: /bg-+/, // 👈  This includes bg of all colors and shades
+    },
+    {
+      pattern: /text-+/, // 👈  This includes text of all colors and shades
+    },
+    {
+      pattern: /ring-+/, // 👈  This includes ring of all colors and shades
+    }
+  ],
 }

@@ -26,3 +26,10 @@ ja:
         publishing_status: "公開状態"
         genre: "ジャンル"
         video: "動画"
+        media_convert_statuses:
+          submitted: "変換依頼済み"
+          progressing: "変換中"
+          complete: "変換完了"
+          canceled: "変換キャンセル"
+          error: "変換エラー"
+          internal_error: "内部エラー"
