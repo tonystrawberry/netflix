@@ -4,6 +4,17 @@ provider "aws" {
   secret_key = var.aws_secret_access_key
 }
 
+# This provider is only used for ACN in the us-east-1 region.
+# That is because Cloudfront is only accepting ACM certificates from the us-east-1 region.
+# Reference: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cnames-and-https-requirements.html
+provider "aws" {
+  alias = "us-east-1"
+  region = "us-east-1"
+  access_key = var.aws_access_key_id
+  secret_key = var.aws_secret_access_key
+}
+
+
 #################
 ### Variables ###
 #################
@@ -55,6 +66,22 @@ resource "aws_s3_bucket_policy" "output_videos_aws_s3_bucket_policy" {
     policy = data.aws_iam_policy_document.output_videos_data_iam_policy_documents.json
 }
 
+##########################
+### CertificateManager ###
+##########################
+
+resource "aws_acm_certificate" "output_videos_aws_acm_certificate" {
+  provider = aws.us-east-1
+
+  domain_name       = "netflix.tonyfromtokyo.online"
+  validation_method = "DNS"
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+
 ##################
 ### CloudFront ###
 ##################
@@ -95,7 +122,7 @@ resource "aws_cloudfront_distribution" "output_videos_aws_cloudfront_distributio
     cloudfront_default_certificate = false
     minimum_protocol_version = "TLSv1.2_2021"
     ssl_support_method = "sni-only"
-    acm_certificate_arn = "arn:aws:acm:us-east-1:550003277685:certificate/c8ed3332-d3ae-4efa-bd89-fbe414d53e5a"
+    acm_certificate_arn = aws_acm_certificate.output_videos_aws_acm_certificate.arn
   }
 }
 
