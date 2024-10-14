@@ -93,4 +93,7 @@ Rails.application.configure do
   # Reference: https://stackoverflow.com/questions/79072634/the-cookie-header-is-not-sent-with-the-fetch-get-request-to-cloudfront-why
   # Files required for using SSL can be found in `config/ssl` (see `config/ssl/README.md` for more information).
   config.force_ssl = true
+
+  # Set the default URL options the controllers will use to generate URLs.
+  config.action_controller.default_url_options = { host: "tonyfromtokyo.online", protocol: "https", port: 3000 }
 end

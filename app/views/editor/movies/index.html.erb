@@ -6,6 +6,8 @@
   <body class="h-full">
   ```
 -->
+<%= turbo_stream_from "movies" %>
+
 <div class="min-h-full">
   <%= render(Editor::HeaderComponent.new) %>
 
@@ -48,7 +50,7 @@
                   </thead>
                   <tbody class="divide-y divide-gray-200 bg-white">
                     <% @movies.each do |movie| %>
-                      <%= render(Editor::MovieRowComponent.new(movie:)) %>
+                      <%= render movie %>
                     <% end %>
                   </tbody>
                 </table>

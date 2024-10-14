@@ -1,41 +1,70 @@
 provider "aws" {
-  region = "ap-northeast-1"
+  region = var.aws_region
   access_key = var.aws_access_key_id
   secret_key = var.aws_secret_access_key
 }
 
-variable "environment" {
-  type = string
-  default = "development"
-}
+#################
+### Variables ###
+#################
 
+variable "environment" { type = string }
+variable "aws_region" { type = string }
 variable "aws_access_key_id" { type = string }
 variable "aws_secret_access_key" { type = string }
+variable "project_name" { type = string }
 
+###############
+### Storage ###
+###############
 resource "aws_s3_bucket" "assets_aws_s3_bucket" {
-  bucket = "tonystrawberry-netflix-assets-${var.environment}"
+  bucket = "${var.project_name}-assets-${var.environment}"
   force_destroy = true
 }
 
-resource "aws_s3_bucket" "output_assets_aws_s3_bucket" {
-  bucket = "tonystrawberry-netflix-output-assets-${var.environment}"
+resource "aws_s3_bucket" "output_videos_aws_s3_bucket" {
+  bucket = "${var.project_name}-output-videos-${var.environment}"
   force_destroy = true
 }
 
-data "aws_cloudfront_cache_policy" "output_assets_aws_cloudfront_cache_policy" {
-  name = "Managed-CachingDisabled"
-}
-data "aws_cloudfront_origin_request_policy" "output_assets_aws_cloudfront_origin_request_policy" {
-  name = "Managed-CORS-S3Origin"
+resource "aws_s3_bucket_cors_configuration" "assets_aws_s3_bucket_cors_configuration" {
+  bucket = aws_s3_bucket.assets_aws_s3_bucket.bucket
+
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["GET", "HEAD", "POST", "PUT"]
+    allowed_origins = ["https://tonyfromtokyo.online:3000"]
+    expose_headers  = []
+  }
 }
 
 
-resource "aws_cloudfront_distribution" "output_assets_aws_cloudfront_distribution" {
+resource "aws_s3_bucket_cors_configuration" "output_videos_aws_s3_bucket_cors_configuration" {
+  bucket = aws_s3_bucket.output_videos_aws_s3_bucket.bucket
+
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["GET", "HEAD", "POST", "PUT"]
+    allowed_origins = ["https://tonyfromtokyo.online:3000"]
+    expose_headers  = []
+  }
+}
+
+resource "aws_s3_bucket_policy" "output_videos_aws_s3_bucket_policy" {
+    bucket = aws_s3_bucket.output_videos_aws_s3_bucket.id
+    policy = data.aws_iam_policy_document.output_videos_data_iam_policy_documents.json
+}
+
+##################
+### CloudFront ###
+##################
+
+resource "aws_cloudfront_distribution" "output_videos_aws_cloudfront_distribution" {
   aliases = ["netflix.tonyfromtokyo.online"]
   origin {
-    domain_name = aws_s3_bucket.output_assets_aws_s3_bucket.bucket_regional_domain_name
-    origin_access_control_id = aws_cloudfront_origin_access_control.output_assets_aws_cloudfront_origin_access_control.id
-    origin_id = aws_s3_bucket.output_assets_aws_s3_bucket.id
+    domain_name = aws_s3_bucket.output_videos_aws_s3_bucket.bucket_regional_domain_name
+    origin_access_control_id = aws_cloudfront_origin_access_control.output_videos_aws_cloudfront_origin_access_control.id
+    origin_id = aws_s3_bucket.output_videos_aws_s3_bucket.id
   }
 
   enabled =  true
@@ -43,18 +72,18 @@ resource "aws_cloudfront_distribution" "output_assets_aws_cloudfront_distributio
   default_cache_behavior {
     allowed_methods = [ "GET", "HEAD", "OPTIONS" ]
     cached_methods = [ "GET", "HEAD", "OPTIONS" ]
-    target_origin_id = aws_s3_bucket.output_assets_aws_s3_bucket.id
+    target_origin_id = aws_s3_bucket.output_videos_aws_s3_bucket.id
 
     viewer_protocol_policy = "redirect-to-https"
     min_ttl = 0
     default_ttl = 3600
     max_ttl = 86400
 
-    trusted_key_groups = [aws_cloudfront_key_group.output_assets_aws_cloudfront_public_key_group.id]
+    trusted_key_groups = [aws_cloudfront_key_group.output_videos_aws_cloudfront_public_key_group.id]
 
-    cache_policy_id =  data.aws_cloudfront_cache_policy.output_assets_aws_cloudfront_cache_policy.id
-    origin_request_policy_id = data.aws_cloudfront_origin_request_policy.output_assets_aws_cloudfront_origin_request_policy.id
-    response_headers_policy_id = aws_cloudfront_response_headers_policy.output_assets_aws_cloudfront_response_headers_policy.id
+    cache_policy_id =  data.aws_cloudfront_cache_policy.output_videos_aws_cloudfront_cache_policy.id
+    origin_request_policy_id = data.aws_cloudfront_origin_request_policy.output_videos_aws_cloudfront_origin_request_policy.id
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.output_videos_aws_cloudfront_response_headers_policy.id
   }
 
   restrictions {
@@ -69,8 +98,16 @@ resource "aws_cloudfront_distribution" "output_assets_aws_cloudfront_distributio
     acm_certificate_arn = "arn:aws:acm:us-east-1:550003277685:certificate/c8ed3332-d3ae-4efa-bd89-fbe414d53e5a"
   }
 }
-resource "aws_cloudfront_response_headers_policy" "output_assets_aws_cloudfront_response_headers_policy" {
-  name    = "tonystrawberry-netflix-output-assets-${var.environment}"
+
+data "aws_cloudfront_cache_policy" "output_videos_aws_cloudfront_cache_policy" {
+  name = "Managed-CachingDisabled"
+}
+data "aws_cloudfront_origin_request_policy" "output_videos_aws_cloudfront_origin_request_policy" {
+  name = "Managed-CORS-S3Origin"
+}
+
+resource "aws_cloudfront_response_headers_policy" "output_videos_aws_cloudfront_response_headers_policy" {
+  name    = "${var.project_name}-output-videos-${var.environment}"
 
   cors_config {
     access_control_allow_credentials = true
@@ -84,7 +121,7 @@ resource "aws_cloudfront_response_headers_policy" "output_assets_aws_cloudfront_
     }
 
     access_control_allow_origins {
-      items = ["https://tonyfromtokyo.online:3000", "https://netflix.tonyfromtokyo.online"]
+      items = ["https://tonyfromtokyo.online:3000"]
     }
 
     access_control_expose_headers {
@@ -97,43 +134,16 @@ resource "aws_cloudfront_response_headers_policy" "output_assets_aws_cloudfront_
   }
 }
 
-resource "aws_cloudfront_origin_access_control" "output_assets_aws_cloudfront_origin_access_control" {
-  name = "tonystrawberry-netflix-cloudfront-origin-access-control"
+resource "aws_cloudfront_origin_access_control" "output_videos_aws_cloudfront_origin_access_control" {
+  name = "${var.project_name}-cloudfront-origin-access-control"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
 }
 
-resource "aws_s3_bucket_cors_configuration" "assets_aws_s3_bucket_cors_configuration" {
-  bucket = aws_s3_bucket.assets_aws_s3_bucket.bucket
-
-  cors_rule {
-    allowed_headers = ["*"]
-    allowed_methods = ["GET", "HEAD", "POST", "PUT"]
-    allowed_origins = ["https://tonyfromtokyo.online:3000"]
-    expose_headers  = []
-  }
-}
-
-# Add a CORS configuration to the S3 output bucket
-resource "aws_s3_bucket_cors_configuration" "output_assets_aws_s3_bucket_cors_configuration" {
-  bucket = aws_s3_bucket.output_assets_aws_s3_bucket.bucket
-
-  cors_rule {
-    allowed_headers = ["*"]
-    allowed_methods = ["GET", "HEAD", "POST", "PUT"]
-    allowed_origins = ["https://tonyfromtokyo.online:3000", "https://netflix.tonyfromtokyo.online"]
-    expose_headers  = []
-  }
-}
-
-resource "aws_s3_bucket_policy" "output_assets_aws_s3_bucket_policy" {
-    bucket = aws_s3_bucket.output_assets_aws_s3_bucket.id
-    policy = data.aws_iam_policy_document.output_assets_data_iam_policy_documents.json
-}
-
+# Only allow CloudFront to access the S3 bucket for output videos.
 # Reference: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html
-data "aws_iam_policy_document" "output_assets_data_iam_policy_documents" {
+data "aws_iam_policy_document" "output_videos_data_iam_policy_documents" {
   statement {
     sid = "Allow CloudFront"
     effect = "Allow"
@@ -146,33 +156,35 @@ data "aws_iam_policy_document" "output_assets_data_iam_policy_documents" {
     ]
 
     resources = [
-        "${aws_s3_bucket.output_assets_aws_s3_bucket.arn}/*"
+        "${aws_s3_bucket.output_videos_aws_s3_bucket.arn}/*"
     ]
     condition {
       test     = "StringEquals"
       variable = "aws:SourceArn"
-      values   = [aws_cloudfront_distribution.output_assets_aws_cloudfront_distribution.arn]
+      values   = [aws_cloudfront_distribution.output_videos_aws_cloudfront_distribution.arn]
     }
   }
 }
 
+# Create a CloudFront public key and key group for the output videos.
+# The access to the output videos is restricted and only allowed for requests with signed cookies.
 # https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-trusted-signers.html#choosing-key-groups-or-AWS-accounts
-resource "aws_cloudfront_public_key" "output_assets_aws_cloudfront_public_key" {
-  encoded_key = file("files/output_assets_aws_cloudfront_public_key.pem")
-  name        = "tonystrawberry-netflix-output-assets-${var.environment}"
+resource "aws_cloudfront_public_key" "output_videos_aws_cloudfront_public_key" {
+  encoded_key = file("files/output_videos_aws_cloudfront_public_key.pem")
+  name        = "${var.project_name}-output-videos-${var.environment}"
 }
 
-resource "aws_cloudfront_key_group" "output_assets_aws_cloudfront_public_key_group" {
-  items   = [aws_cloudfront_public_key.output_assets_aws_cloudfront_public_key.id]
-  name    = "tonystrawberry-netflix-output-assets-${var.environment}"
+resource "aws_cloudfront_key_group" "output_videos_aws_cloudfront_public_key_group" {
+  items   = [aws_cloudfront_public_key.output_videos_aws_cloudfront_public_key.id]
+  name    = "${var.project_name}-output-videos-${var.environment}"
 }
 
-resource "aws_s3_bucket_notification" "output_assets_aws_s3_bucket_notification" {
-  bucket = aws_s3_bucket.output_assets_aws_s3_bucket.bucket
-}
+####################
+### MediaConvert ###
+####################
 
 resource "aws_iam_role" "media_convert_aws_iam_role" {
-  name = "tonystrawberry-netflix-media-convert-iam-role-${var.environment}"
+  name = "${var.project_name}-media-convert-iam-role-${var.environment}"
 
   assume_role_policy = <<EOF
 {
@@ -190,9 +202,10 @@ resource "aws_iam_role" "media_convert_aws_iam_role" {
 EOF
 }
 
-# Grand permission to access the input and output S3 bucket
+# Grant permission to MediaConvert to access the S3 buckets (both assets and output videos).
+# The assets bucket is used for retrieving the input videos, and the output videos bucket is used for storing the converted videos.
 resource "aws_iam_policy" "media_convert_aws_iam_policy" {
-  name = "tonystrawberry-netflix-media-convert-iam-policy-${var.environment}"
+  name = "${var.project_name}-media-convert-iam-policy-${var.environment}"
   description = "IAM policy for the MediaConvert role"
 
   policy = jsonencode({
@@ -206,7 +219,7 @@ resource "aws_iam_policy" "media_convert_aws_iam_policy" {
         ]
         Resource = [
           "${aws_s3_bucket.assets_aws_s3_bucket.arn}/*",
-          "${aws_s3_bucket.output_assets_aws_s3_bucket.arn}/*"
+          "${aws_s3_bucket.output_videos_aws_s3_bucket.arn}/*"
         ]
       }
     ]

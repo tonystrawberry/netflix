@@ -49,7 +49,7 @@ class MovieDecorator < Draper::Decorator
     when :submitted
       h.content_tag(:span, I18n.t("activerecord.attributes.movie.media_convert_statuses.submitted"), class: "rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-600/20")
     when :progressing
-      h.content_tag(:span, "#{I18n.t("activerecord.attributes.movie.media_convert_statuses.progressing")} (#{object.media_convert_progress_percentage}%)", class: "rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-700 ring-1 ring-inset ring-yellow-600/20")
+      h.content_tag(:span, "#{I18n.t("activerecord.attributes.movie.media_convert_statuses.progressing")} (#{object.media_convert_progress_percentage || 0}%)", class: "rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-700 ring-1 ring-inset ring-yellow-600/20")
     when :complete
       h.content_tag(:span, I18n.t("activerecord.attributes.movie.media_convert_statuses.complete"), class: "rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20")
     when :canceled
