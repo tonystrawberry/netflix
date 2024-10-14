@@ -20,6 +20,8 @@
 class Movie < ApplicationRecord
   has_prefix_id :movie
 
+  broadcasts_to ->(movie) { [ "movies" ] }, inserts_by: :prepend, partial: "editor/movies/movie"
+
   has_one_attached :cover
   has_one_attached :logo
   has_one_attached :video
