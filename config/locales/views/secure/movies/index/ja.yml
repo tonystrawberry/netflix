@@ -1,0 +1,6 @@
+ja:
+  views:
+    secure:
+      movies:
+        index:
+          home: "ホーム"

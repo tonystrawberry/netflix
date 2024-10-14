@@ -47,15 +47,6 @@ class Movie < ApplicationRecord
 
   before_save :set_published_at, if: -> { publishing_status_published? && saved_change_to_publishing_status? }
 
-  scope :without_attached_hls_video, -> { left_joins(:hls_video_attachment).where(active_storage_attachments: { id: nil }) }
-
-  # Find a movie by the key of the attached video.
-  # @param key [String] the key of the attached video.
-  # @return [Movie] the movie with the attached video.
-  def self.find_by_movie_key!(key)
-    with_attached_video.find_by("active_storage_blobs.key": key)
-  end
-
   private
 
   # Set the published date when the movie is published.

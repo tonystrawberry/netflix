@@ -12,10 +12,13 @@ class Editor::MoviesController < Editor::BaseController
   end
 
   def create
-    @movie = Movie.new(movie_params)
+    @movie = Movie.new(movie_params.except(:video))
 
     ActiveRecord::Base.transaction do
       if @movie.save
+        @movie.video = movie_params[:video] if movie_params[:video].present?
+        @movie.save
+
         ConvertVideoToHlsFormatJob.perform_later(movie_id: id)
 
         redirect_to editor_movies_path
@@ -41,12 +44,18 @@ class Editor::MoviesController < Editor::BaseController
 
     success = false
 
+    # For some reason, updating both the video and the images (cover, logo) in the same transaction
+    # causes the images to be deleted from the storage (have they ever been uploaded?). To avoid this,
+    # we update the images first and then the video.
     ActiveRecord::Base.transaction do
       @movie.movies_genres.destroy_all
-      success = @movie.update(movie_params)
+      success = @movie.update(movie_params.except(:video))
     end
 
     if success
+      @movie.video = movie_params[:video] if movie_params[:video].present?
+      @movie.save
+
       ConvertVideoToHlsFormatJob.perform_later(movie_id: @movie.id) if params[:movie][:video].present?
 
       redirect_to editor_movies_path
