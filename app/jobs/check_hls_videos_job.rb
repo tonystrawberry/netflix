@@ -34,7 +34,7 @@ class CheckHlsVideosJob < ApplicationJob
     # and attach the HLS video to the movie
     s3_client = Aws::S3::Client.new(region: "ap-northeast-1", access_key_id: ENV["AWS_ACCESS_KEY_ID"], secret_access_key: ENV["AWS_SECRET_ACCESS_KEY"])
 
-    s3_object = s3_client.head_object(bucket: "tonystrawberry-netflix-output-assets-development", key: output_s3_key)
+    s3_object = s3_client.head_object(bucket: "tonystrawberry-netflix-output-videos-development", key: output_s3_key)
 
     ActiveRecord::Base.transaction do
       blob = ActiveStorage::Blob.create!(

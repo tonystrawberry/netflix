@@ -13,9 +13,6 @@ class MediaConvert::Inspector < MediaConvert::Base
   def inspect(job_id:)
     @response = client.get_job(id: job_id)
 
-    puts @response.to_json
-
-
     @status = @response.job.status
     @percentage = @response.job.job_percent_complete
     @output_s3_key = @response.job.settings.output_groups[0].output_group_settings.hls_group_settings.destination
