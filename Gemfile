@@ -71,7 +71,7 @@ gem "devise", "~> 4.9"
 
 gem "rails-i18n", "~> 7.0.0" # For 7.0.0
 
-gem "honeybadger", "~> 5.15"
+gem "honeybadger", "~> 5.17"
 
 gem "mobility", "~> 1.3.0.rc3"
 
